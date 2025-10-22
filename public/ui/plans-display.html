@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>باقات نيمرو - Nimro Communication Plans</title>
+    <style>
+        /* الأنماط تتبع مبادئ App SDK: بسيطة ومتناسقة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 32px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 1.1em;
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plan-card {
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+        }
+
+        .plan-card.popular {
+            border-color: #007aff;
+            border-width: 3px;
+            transform: scale(1.05);
+        }
+
+        .plan-card.popular:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff9500 0%, #ff6b00 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.4);
+            letter-spacing: 0.5px;
+            animation: pulse 2s infinite;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #f2f2f7 0%, #e5e5ea 100%);
+            color: #636366;
+        }
+
+        .title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1c1c1e;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .price {
+            font-size: 2.4em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .price-period {
+            font-size: 0.4em;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .features li {
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            color: #3a3a3c;
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            line-height: 1.6;
+            transition: background 0.2s ease;
+        }
+
+        .features li:hover {
+            background: rgba(0, 122, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+        .cta-group {
+            margin-top: 24px;
+        }
+
+        .cta-group button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: inherit;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .cta-primary:hover {
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .cta-primary:active {
+            transform: translateY(0);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #007aff;
+            border: 2px solid #007aff;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .plans-container {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.popular {
+                transform: scale(1);
+            }
+
+            .plan-card.popular:hover {
+                transform: translateY(-8px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🌟 باقات نيمرو للاتصالات</h1>
+    <p>اختر الباقة المثالية التي تناسب احتياجاتك</p>
+</div>
+
+<div class="plans-container">
+
+    <!-- الباقة 1: الرقم الافتراضي -->
+    <div class="plan-card">
+        <div class="type-badge">📱 أرقام افتراضية</div>
+        <div class="title">باقة الرقم الافتراضي</div>
+        <div class="price">$3.99 <span class="price-period">/ الشهر</span></div>
+        <ul class="features">
+            <li>✅ رقم هاتف أمريكي/دولي</li>
+            <li>✅ 100 دقيقة مكالمات محلية</li>
+            <li>✅ استقبال SMS غير محدود</li>
+        </ul>
+        <div class="cta-group">
+            <button class="cta-primary" onclick="selectPlan('virtual-number')">🚀 تفعيل الباقة</button>
+            <button class="cta-secondary" onclick="showDetails('virtual-number')">📖 استعراض الميزات</button>
+        </div>
+    </div>
+
+    <!-- الباقة 2: eSIM للبيانات -->
+    <div class="plan-card">
+        <div class="type-badge">🌍 eSIM</div>
+        <div class="title">باقة البيانات العالمية</div>
+        <div class="price">$19.99 <span class="price-period">/ 7 أيام</span></div>
+        <ul class="features">
+            <li>✅ 5 جيجابايت بيانات سفر</li>
+            <li>✅ تغطية 100+ دولة</li>
+            <li>✅ تفعيل فوري (eSIM)</li>
+        </ul>
+        <div class="cta-group">
+            <button class="cta-primary" onclick="selectPlan('esim-data')">🚀 تفعيل الباقة</button>
+            <button class="cta-secondary" onclick="showDetails('esim-data')">📖 استعراض الميزات</button>
+        </div>
+    </div>
+
+    <!-- الباقة 3: الشاملة (الأكثر شعبية) -->
+    <div class="plan-card popular">
+        <div class="popular-badge">⭐ الأكثر شعبية</div>
+        <div class="type-badge">💎 باقة شاملة</div>
+        <div class="title">الباقة الشاملة</div>
+        <div class="price">$49.99 <span class="price-period">/ الشهر</span></div>
+        <ul class="features">
+            <li>✅ رقم افتراضي + بيانات</li>
+            <li>✅ 10GB بيانات عالمية</li>
+            <li>✅ 300 دقيقة دولية</li>
+        </ul>
+        <div class="cta-group">
+            <button class="cta-primary" onclick="selectPlan('combo-plan')">🚀 تفعيل الباقة</button>
+            <button class="cta-secondary" onclick="showDetails('combo-plan')">📖 استعراض الميزات</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>💼 جميع الأسعار بالدولار الأمريكي • 🔒 دفع آمن ومشفر • 📞 دعم فني 24/7</p>
+    <p style="margin-top: 8px;">Powered by <strong>Nimro Communications</strong></p>
+</div>
+
+<script>
+    /**
+     * الجزء الخاص بالتفاعل مع ChatGPT عبر Apps SDK/MCP
+     * هذا الكود يستخدم 'window.openai' لإرسال تفاعلات المستخدم مرة أخرى إلى ChatGPT
+     */
+
+    // دالة تفعيل الباقة
+    function selectPlan(planId) {
+        console.log('🚀 Activating plan:', planId);
+
+        const planNames = {
+            'virtual-number': 'باقة الرقم الافتراضي',
+            'esim-data': 'باقة البيانات العالمية',
+            'combo-plan': 'الباقة الشاملة'
+        };
+
+        const message = `الرجاء تفعيل "${planNames[planId] || planId}"`;
+
+        // محاولة استخدام window.openai إذا كان متاحاً (OpenAI Apps SDK)
+        if (window.openai && window.openai.postMessage) {
+            window.openai.postMessage('action:purchase_plan', {
+                plan_id: planId,
+                user_intent: message,
+                timestamp: new Date().toISOString()
+            });
+            console.log('✅ Message sent via window.openai');
+        }
+        // استخدام postMessage القياسي كبديل
+        else if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'nimro:activate_plan',
+                planId: planId,
+                message: message,
+                timestamp: new Date().toISOString()
+            }, '*');
+            console.log('✅ Message sent via window.parent.postMessage');
+        }
+        // محاكاة محلية للعرض التقديمي
+        else {
+            const confirmMsg = `✅ تم طلب تفعيل: ${planNames[planId]}\n\n` +
+                             `سيتم معالجة طلبك وإرسال تفاصيل التفعيل إلى بريدك الإلكتروني.\n\n` +
+                             `(هذه محاكاة للعرض التقديمي)`;
+            alert(confirmMsg);
+            console.log('ℹ️ Running in demo mode (local simulation)');
+        }
+    }
+
+    // دالة عرض التفاصيل
+    function showDetails(planId) {
+        console.log('📖 Showing details for:', planId);
+
+        const planNames = {
+            'virtual-number': 'باقة الرقم الافتراضي',
+            'esim-data': 'باقة البيانات العالمية',
+            'combo-plan': 'الباقة الشاملة'
+        };
+
+        const message = `أريد المزيد من التفاصيل حول "${planNames[planId] || planId}"`;
+
+        // محاولة استخدام window.openai
+        if (window.openai && window.openai.postMessage) {
+            window.openai.postMessage('text:request_details', {
+                plan_id: planId,
+                user_intent: message,
+                timestamp: new Date().toISOString()
+            });
+            console.log('✅ Details request sent via window.openai');
+        }
+        // استخدام postMessage القياسي
+        else if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'nimro:show_details',
+                planId: planId,
+                message: message,
+                timestamp: new Date().toISOString()
+            }, '*');
+            console.log('✅ Details request sent via window.parent.postMessage');
+        }
+        // محاكاة محلية
+        else {
+            const detailsMsg = `📋 تفاصيل ${planNames[planId]}:\n\n` +
+                             `سيتم عرض جميع الميزات والشروط والأحكام.\n\n` +
+                             `(هذه محاكاة للعرض التقديمي)`;
+            alert(detailsMsg);
+            console.log('ℹ️ Running in demo mode (local simulation)');
+        }
+    }
+
+    // الاستماع للرسائل من النافذة الأم (للتفاعل ثنائي الاتجاه)
+    window.addEventListener('message', function(event) {
+        console.log('📨 Received message from parent:', event.data);
+
+        // معالجة الرسائل الواردة من ChatGPT أو النافذة الأم
+        if (event.data && event.data.type) {
+            switch(event.data.type) {
+                case 'nimro:confirmation':
+                    console.log('✅ Confirmation received:', event.data.message);
+                    break;
+                case 'nimro:error':
+                    console.error('❌ Error received:', event.data.message);
+                    break;
+                default:
+                    console.log('ℹ️ Unknown message type:', event.data.type);
+            }
+        }
+    });
+
+    // إرسال رسالة جاهزية عند تحميل الصفحة
+    window.addEventListener('load', function() {
+        console.log('🎉 Nimro Plans UI loaded successfully');
+
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'nimro:ready',
+                timestamp: new Date().toISOString()
+            }, '*');
+        }
+    });
+</script>
+
+</body>
+</html>
