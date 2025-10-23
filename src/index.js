@@ -430,8 +430,7 @@ ${plans.map(plan => `
 <script>
     // Interaction with ChatGPT via Apps SDK/MCP
     function selectPlan(planId) {
-        const message = 
-`Please activate the plan: ${planId}`;
+        const message = 'Please activate the plan: ' + planId;
 
         // Try to use window.openai if available
         if (window.openai && window.openai.postMessage) {
@@ -447,13 +446,12 @@ ${plans.map(plan => `
                 message: message
             }, '*');
         } else {
-            alert(`✅ Simulation: Plan activation requested for ${planId}`);
+            alert('✅ Simulation: Plan activation requested for ' + planId);
         }
     }
 
     function showDetails(planId) {
-        const message = 
-`I want more details about the plan: ${planId}`;
+        const message = 'I want more details about the plan: ' + planId;
 
         if (window.openai && window.openai.postMessage) {
             window.openai.postMessage('text:request_details', {
@@ -467,7 +465,7 @@ ${plans.map(plan => `
                 message: message
             }, '*');
         } else {
-            alert(`📖 Simulation: Plan details requested for ${planId}`);
+            alert('📖 Simulation: Plan details requested for ' + planId);
         }
     }
 

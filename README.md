@@ -80,14 +80,26 @@ npm install
 npm start
 ```
 
-### Local Testing
+### Local Testing with MCP Inspector
 
 ```bash
-# Use MCP Inspector for testing
-npx @modelcontextprotocol/inspector src/index.js
+# Use the convenient script
+./start-inspector.sh
+
+# Or run manually
+npx @modelcontextprotocol/inspector node src/index.js
+
+# Or with the shell script
+npx @modelcontextprotocol/inspector ./run-mcp-server.sh
 ```
 
-Then open your browser to `http://localhost:5173`
+The inspector will:
+- Start on `http://localhost:6274`
+- Open automatically in your browser
+- Display an authentication token
+- Show all available tools for testing
+
+**For detailed testing instructions, see [TESTING.md](TESTING.md)**
 
 ---
 
@@ -244,16 +256,24 @@ The interface doesn't look like an external element but blends perfectly with th
 
 ## 🔧 ChatGPT Integration
 
-### Method 1: MCP Inspector (for testing)
+### Method 1: MCP Inspector (for testing and debugging)
 ```bash
-npx @modelcontextprotocol/inspector src/index.js
+# Easiest way
+./start-inspector.sh
+
+# Or manually
+npx @modelcontextprotocol/inspector node src/index.js
 ```
 
-### Method 2: ChatGPT Desktop Config
+This launches a web interface for testing all tools interactively.
+
+### Method 2: Claude Desktop Integration
 
 Add to the configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -265,6 +285,23 @@ Add to the configuration file:
   }
 }
 ```
+
+Or use the shell script:
+
+```json
+{
+  "mcpServers": {
+    "numeroesim": {
+      "command": "/absolute/path/to/appChatGpt/run-mcp-server.sh"
+    }
+  }
+}
+```
+
+After adding the configuration:
+1. Restart Claude Desktop
+2. The Numeroesim tools will be available
+3. Ask Claude to display plans or activate services
 
 ---
 
