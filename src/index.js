@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * تطبيق نيمرو - Nimro Communication Plans Prototype
- * بروتوتايب لعرض باقات الاتصالات (eSIM والأرقام الافتراضية)
- * باستخدام OpenAI Apps SDK (MCP)
+ * numero esim - numero esim Communication Plans Prototype
+ * A prototype to display communication plans (eSIM and virtual numbers)
+ * using the OpenAI Apps SDK (MCP).
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -13,40 +13,40 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
-// بيانات الباقات الوهمية
+// Mock plan data
 const MOCK_PLANS = {
   'virtual-number': {
     id: 'virtual-number',
-    name: 'باقة الرقم الافتراضي',
+    name: 'Virtual Number Plan',
     nameEn: 'Virtual Number Plan',
     price: 3.99,
     currency: 'USD',
-    period: 'شهر',
+    period: 'month',
     periodEn: 'month',
     features: [
-      'رقم هاتف أمريكي/دولي',
-      '100 دقيقة مكالمات محلية',
-      'استقبال SMS غير محدود'
+      'US/International Phone Number',
+      '100 Local Minutes',
+      'Unlimited SMS Reception'
     ],
     featuresEn: [
       'US/International Phone Number',
       '100 Local Minutes',
       'Unlimited SMS Reception'
     ],
-    type: 'أرقام افتراضية'
+    type: 'Virtual Numbers'
   },
   'esim-data': {
     id: 'esim-data',
-    name: 'باقة البيانات العالمية',
+    name: 'Global Data Plan',
     nameEn: 'Global Data Plan',
     price: 19.99,
     currency: 'USD',
-    period: '7 أيام',
+    period: '7 days',
     periodEn: '7 days',
     features: [
-      '5 جيجابايت بيانات سفر',
-      'تغطية 100+ دولة',
-      'تفعيل فوري (eSIM)'
+      '5GB Travel Data',
+      '100+ Countries Coverage',
+      'Instant Activation (eSIM)'
     ],
     featuresEn: [
       '5GB Travel Data',
@@ -57,31 +57,31 @@ const MOCK_PLANS = {
   },
   'combo-plan': {
     id: 'combo-plan',
-    name: 'الباقة الشاملة',
+    name: 'Complete Bundle Plan',
     nameEn: 'Complete Bundle Plan',
     price: 49.99,
     currency: 'USD',
-    period: 'شهر',
+    period: 'month',
     periodEn: 'month',
     features: [
-      'رقم افتراضي + بيانات',
-      '10GB بيانات عالمية',
-      '300 دقيقة دولية'
+      'Virtual Number + Data',
+      '10GB Global Data',
+      '300 International Minutes'
     ],
     featuresEn: [
       'Virtual Number + Data',
       '10GB Global Data',
       '300 International Minutes'
     ],
-    type: 'الكل',
+    type: 'All',
     popular: true
   }
 };
 
-// إنشاء خادم MCP
+// Create an MCP server
 const server = new Server(
   {
-    name: 'nimro-communication-server',
+    name: 'numeroesim-communication-server',
     version: '1.0.0',
   },
   {
@@ -91,35 +91,35 @@ const server = new Server(
   }
 );
 
-// تسجيل معالج قائمة الأدوات
+// Register the tool list handler
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
       {
-        name: 'عرض_باقات_الاتصالات',
-        description: 'تستخدم لعرض الباقات المتوفرة من نيمرو، مثل الأرقام الافتراضية وباقات eSIM، في واجهة تفاعلية داخل ChatGPT.',
+        name: 'display_communication_plans',
+        description: 'Used to display available Numeroesim plans, such as virtual numbers and eSIM packages, in an interactive interface within ChatGPT.',
         inputSchema: {
           type: 'object',
           properties: {
-            نوع_الخدمة: {
+            service_type: {
               type: 'string',
-              description: "نوع الخدمة المراد عرض باقاتها. يمكن أن تكون 'eSIM' أو 'أرقام افتراضية' أو 'الكل' (افتراضي).",
-              enum: ['eSIM', 'أرقام افتراضية', 'الكل'],
-              default: 'الكل'
+              description: "The type of service to display plans for. Can be 'eSIM', 'virtual_numbers', or 'all' (default).",
+              enum: ['eSIM', 'virtual_numbers', 'all'],
+              default: 'all'
             }
           },
           required: []
         }
       },
       {
-        name: 'تفعيل_باقة',
-        description: 'تفعيل باقة معينة من باقات نيمرو (محاكاة)',
+        name: 'activate_plan',
+        description: 'Activates a specific Numeroesim plan (simulation).',
         inputSchema: {
           type: 'object',
           properties: {
             plan_id: {
               type: 'string',
-              description: 'معرف الباقة المراد تفعيلها',
+              description: 'The ID of the plan to activate.',
               enum: ['virtual-number', 'esim-data', 'combo-plan']
             }
           },
@@ -127,14 +127,14 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         }
       },
       {
-        name: 'استعراض_تفاصيل_الباقة',
-        description: 'الحصول على تفاصيل موسعة لباقة معينة',
+        name: 'review_plan_details',
+        description: 'Gets extended details for a specific plan.',
         inputSchema: {
           type: 'object',
           properties: {
             plan_id: {
               type: 'string',
-              description: 'معرف الباقة المراد استعراض تفاصيلها',
+              description: 'The ID of the plan to review details for.',
               enum: ['virtual-number', 'esim-data', 'combo-plan']
             }
           },
@@ -145,28 +145,28 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-// تسجيل معالج استدعاء الأدوات
+// Register the tool call handler
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   try {
-    if (name === 'عرض_باقات_الاتصالات') {
-      const serviceType = args?.نوع_الخدمة || 'الكل';
+    if (name === 'display_communication_plans') {
+      const serviceType = args?.service_type || 'all';
 
-      // تصفية الباقات حسب نوع الخدمة
+      // Filter plans by service type
       let filteredPlans = Object.values(MOCK_PLANS);
-      if (serviceType !== 'الكل') {
+      if (serviceType !== 'all') {
         filteredPlans = filteredPlans.filter(plan =>
-          plan.type === serviceType || plan.type === 'الكل'
+          plan.type === serviceType || plan.type === 'All'
         );
       }
 
-      // إرجاع واجهة HTML كاملة
+      // Return a complete HTML interface
       return {
         content: [
           {
             type: 'text',
-            text: `تم تحميل ${filteredPlans.length} باقة من نيمرو (${serviceType})`
+            text: `Loaded ${filteredPlans.length} plans from Numeroesim (${serviceType})`
           },
           {
             type: 'resource',
@@ -180,34 +180,34 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       };
     }
 
-    if (name === 'تفعيل_باقة') {
+    if (name === 'activate_plan') {
       const planId = args.plan_id;
       const plan = MOCK_PLANS[planId];
 
       if (!plan) {
-        throw new Error(`الباقة ${planId} غير موجودة`);
+        throw new Error(`Plan ${planId} not found`);
       }
 
       return {
         content: [
           {
             type: 'text',
-            text: `✅ تم تفعيل "${plan.name}" بنجاح!\n\n` +
-                  `💰 السعر: $${plan.price} / ${plan.period}\n` +
-                  `📦 الميزات:\n${plan.features.map(f => `  • ${f}`).join('\n')}\n\n` +
-                  `📧 سيتم إرسال تفاصيل التفعيل إلى بريدك الإلكتروني.\n` +
-                  `⏰ التفعيل الفعلي: فوري (محاكاة)`
+            text: `✅ "${plan.name}" has been activated successfully!\n\n` +
+                  `💰 Price: $${plan.price} / ${plan.period}\n` +
+                  `📦 Features:\n${plan.features.map(f => `  • ${f}`).join('\n')}\n\n` +
+                  `📧 Activation details will be sent to your email.\n` +
+                  `⏰ Actual Activation: Instant (simulation)`
           }
         ],
       };
     }
 
-    if (name === 'استعراض_تفاصيل_الباقة') {
+    if (name === 'review_plan_details') {
       const planId = args.plan_id;
       const plan = MOCK_PLANS[planId];
 
       if (!plan) {
-        throw new Error(`الباقة ${planId} غير موجودة`);
+        throw new Error(`Plan ${planId} not found`);
       }
 
       return {
@@ -215,29 +215,29 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           {
             type: 'text',
             text: `📋 **${plan.name}** (${plan.nameEn})\n\n` +
-                  `💵 **السعر:** $${plan.price} / ${plan.period}\n\n` +
-                  `✨ **الميزات الكاملة:**\n${plan.features.map((f, i) =>
+                  `💵 **Price:** $${plan.price} / ${plan.period}\n\n` +
+                  `✨ **Full Features:**\n${plan.features.map((f, i) =>
                     `  ${i + 1}. ${f}`
                   ).join('\n')}\n\n` +
-                  `🌍 **نوع الخدمة:** ${plan.type}\n` +
-                  (plan.popular ? `🏆 **الأكثر شعبية** - الخيار المفضل للعملاء\n` : '') +
-                  `\n📞 **معلومات إضافية:**\n` +
-                  `  • التفعيل: فوري عبر الإنترنت\n` +
-                  `  • الإلغاء: في أي وقت\n` +
-                  `  • الدعم الفني: 24/7 عبر الدردشة\n` +
-                  `  • طرق الدفع: Visa, MasterCard, PayPal, Apple Pay`
+                  `🌍 **Service Type:** ${plan.type}\n` +
+                  (plan.popular ? `🏆 **Most Popular** - The preferred choice for customers\n` : '') + 
+                  `\n📞 **Additional Information:**\n` +
+                  `  • Activation: Instant online\n` +
+                  `  • Cancellation: Anytime\n` +
+                  `  • Support: 24/7 via chat\n` +
+                  `  • Payment Methods: Visa, MasterCard, PayPal, Apple Pay`
           }
         ],
       };
     }
 
-    throw new Error(`أداة غير معروفة: ${name}`);
+    throw new Error(`Unknown tool: ${name}`);
   } catch (error) {
     return {
       content: [
         {
           type: 'text',
-          text: `خطأ: ${error.message}`,
+          text: `Error: ${error.message}`,
         },
       ],
       isError: true,
@@ -245,14 +245,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   }
 });
 
-// دالة لتوليد HTML للباقات
+// Function to generate HTML for the plans
 function generatePlansHTML(plans) {
   return `<!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>باقات نيمرو</title>
+    <title>Numeroesim Plans</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -345,7 +345,7 @@ function generatePlansHTML(plans) {
             list-style: none;
             padding: 0;
             margin: 20px 0;
-            text-align: right;
+            text-align: left;
         }
         .features li {
             margin-bottom: 10px;
@@ -405,14 +405,14 @@ function generatePlansHTML(plans) {
 <body>
 
 <div class="header">
-    <h1>🌟 باقات نيمرو</h1>
-    <p>اختر الباقة المثالية لاحتياجاتك</p>
+    <h1>🌟 Numeroesim Plans</h1>
+    <p>Choose the perfect plan for your needs</p>
 </div>
 
 <div class="plans-container">
 ${plans.map(plan => `
     <div class="plan-card${plan.popular ? ' popular' : ''}">
-        ${plan.popular ? '<div class="popular-badge">⭐ الأكثر شعبية</div>' : ''}
+        ${plan.popular ? '<div class="popular-badge">⭐ Most Popular</div>' : ''}
         <div class="type-badge">${plan.type}</div>
         <div class="title">${plan.name}</div>
         <div class="price">$${plan.price} <span class="price-period">/ ${plan.period}</span></div>
@@ -420,38 +420,40 @@ ${plans.map(plan => `
             ${plan.features.map(feature => `<li>✅ ${feature}</li>`).join('')}
         </ul>
         <div class="cta-group">
-            <button class="cta-primary" onclick="selectPlan('${plan.id}')">🚀 تفعيل الباقة</button>
-            <button class="cta-secondary" onclick="showDetails('${plan.id}')">📖 استعراض الميزات</button>
+            <button class="cta-primary" onclick="selectPlan('${plan.id}')">🚀 Activate Plan</button>
+            <button class="cta-secondary" onclick="showDetails('${plan.id}')">📖 Review Features</button>
         </div>
     </div>
 `).join('')}
 </div>
 
 <script>
-    // التفاعل مع ChatGPT عبر Apps SDK/MCP
+    // Interaction with ChatGPT via Apps SDK/MCP
     function selectPlan(planId) {
-        const message = \`الرجاء تفعيل الباقة: \${planId}\`;
+        const message = 
+`Please activate the plan: ${planId}`;
 
-        // محاولة استخدام window.openai إذا كان متاحاً
+        // Try to use window.openai if available
         if (window.openai && window.openai.postMessage) {
             window.openai.postMessage('action:purchase_plan', {
                 plan_id: planId,
                 user_intent: message
             });
         } else if (window.parent && window.parent.postMessage) {
-            // استخدام postMessage القياسي كبديل
+            // Use standard postMessage as a fallback
             window.parent.postMessage({
-                type: 'nimro:activate_plan',
+                type: 'numeroesim:activate_plan',
                 planId: planId,
                 message: message
             }, '*');
         } else {
-            alert(\`✅ محاكاة: تم طلب تفعيل الباقة \${planId}\`);
+            alert(`✅ Simulation: Plan activation requested for ${planId}`);
         }
     }
 
     function showDetails(planId) {
-        const message = \`أريد المزيد من التفاصيل حول الباقة: \${planId}\`;
+        const message = 
+`I want more details about the plan: ${planId}`;
 
         if (window.openai && window.openai.postMessage) {
             window.openai.postMessage('text:request_details', {
@@ -460,16 +462,16 @@ ${plans.map(plan => `
             });
         } else if (window.parent && window.parent.postMessage) {
             window.parent.postMessage({
-                type: 'nimro:show_details',
+                type: 'numeroesim:show_details',
                 planId: planId,
                 message: message
             }, '*');
         } else {
-            alert(\`📖 محاكاة: تم طلب تفاصيل الباقة \${planId}\`);
+            alert(`📖 Simulation: Plan details requested for ${planId}`);
         }
     }
 
-    // الاستماع للرسائل من النافذة الأم
+    // Listen for messages from the parent window
     window.addEventListener('message', function(event) {
         console.log('Received message:', event.data);
     });
@@ -479,11 +481,11 @@ ${plans.map(plan => `
 </html>`;
 }
 
-// بدء الخادم
+// Start the server
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('🚀 Nimro Communication MCP Server running on stdio');
+  console.error('🚀 Numeroesim Communication MCP Server running on stdio');
 }
 
 main().catch((error) => {

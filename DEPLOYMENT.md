@@ -1,190 +1,202 @@
-# دليل نشر تطبيق نيمرو على OpenAI ChatGPT
+# Nimro App Deployment Guide for OpenAI ChatGPT
 
-## نظرة عامة
+## Overview
 
-هذا الدليل يشرح كيفية نشر تطبيق نيمرو (Nimro Communication Plans) على منصة OpenAI ChatGPT باستخدام Model Context Protocol (MCP).
+This guide explains how to deploy the Nimro Communication Plans application on the OpenAI ChatGPT platform using the Model Context Protocol (MCP).
 
-## المتطلبات الأساسية
+## Prerequisites
 
-1. **حساب OpenAI Developer**: تحتاج إلى حساب مطور على OpenAI
-2. **Node.js**: الإصدار 18 أو أحدث
-3. **npm**: مدير الحزم
+1.  **OpenAI Developer Account**: You need a developer account on OpenAI.
+2.  **Node.js**: Version 18 or later.
+3.  **npm**: Node Package Manager.
 
-## خطوات التثبيت المحلية
+## Local Installation Steps
 
-### 1. تثبيت الاعتماديات
+### 1. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. اختبار التطبيق محلياً
+### 2. Test the Application Locally
 
 ```bash
 npm start
 ```
 
-أو للتطوير مع المراقبة التلقائية:
+Or for development with automatic monitoring:
 
 ```bash
 npm run dev
 ```
 
-## التكامل مع ChatGPT
+## Integration with ChatGPT
 
-### الطريقة 1: استخدام MCP Inspector (للاختبار)
+### Method 1: Using MCP Inspector (for testing)
 
-1. ثبّت MCP Inspector:
-```bash
-npx @modelcontextprotocol/inspector src/index.js
-```
+1.  Install MCP Inspector:
 
-2. افتح المتصفح على العنوان الذي يظهر لك (عادة http://localhost:5173)
+    ```bash
+    npx @modelcontextprotocol/inspector src/index.js
+    ```
 
-3. اختبر الأدوات المتاحة:
-   - `عرض_باقات_الاتصالات`
-   - `تفعيل_باقة`
-   - `استعراض_تفاصيل_الباقة`
+2.  Open your browser to the address that appears (usually http://localhost:5173).
 
-### الطريقة 2: التكامل مع ChatGPT Desktop (للمطورين)
+3.  Test the available tools:
 
-1. افتح ملف تكوين ChatGPT Desktop:
-   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+    *   `display_communication_plans`
+    *   `activate_plan`
+    *   `review_plan_details`
 
-2. أضف تكوين خادم MCP:
+### Method 2: Integration with ChatGPT Desktop (for developers)
 
-```json
-{
-  "mcpServers": {
-    "nimro": {
-      "command": "node",
-      "args": ["/path/to/appChatGpt/src/index.js"]
+1.  Open the ChatGPT Desktop configuration file:
+
+    *   **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+    *   **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2.  Add the MCP server configuration:
+
+    ```json
+    {
+      "mcpServers": {
+        "nimro": {
+          "command": "node",
+          "args": ["/path/to/appChatGpt/src/index.js"]
+        }
+      }
     }
-  }
-}
-```
+    ```
 
-3. أعد تشغيل ChatGPT Desktop
+3.  Restart ChatGPT Desktop.
 
-### الطريقة 3: النشر على الإنتاج (OpenAI Apps)
+### Method 3: Production Deployment (OpenAI Apps)
 
-> **ملاحظة**: تحتاج إلى الوصول إلى OpenAI Apps Platform (قد يكون محدوداً)
+> **Note**: You need access to the OpenAI Apps Platform (may be limited).
 
-1. قم بتسجيل الدخول إلى [OpenAI Developer Platform](https://platform.openai.com/)
+1.  Log in to the [OpenAI Developer Platform](https://platform.openai.com/).
 
-2. انتقل إلى قسم "Apps" أو "GPTs"
+2.  Go to the "Apps" or "GPTs" section.
 
-3. أنشئ تطبيق جديد وحمّل الملفات التالية:
-   - `src/index.js` (الخادم الرئيسي)
-   - `package.json` (التبعيات)
-   - `public/ui/plans-display.html` (الواجهة)
+3.  Create a new application and upload the following files:
 
-4. قم بتكوين الأذونات والمتغيرات البيئية
+    *   `src/index.js` (main server)
+    *   `package.json` (dependencies)
+    *   `public/ui/plans-display.html` (interface)
 
-## هيكل المشروع
+4.  Configure permissions and environment variables.
+
+## Project Structure
 
 ```
 appChatGpt/
 ├── src/
-│   └── index.js              # خادم MCP الرئيسي
+│   └── index.js              # Main MCP server
 ├── public/
 │   └── ui/
-│       └── plans-display.html # واجهة المستخدم
-├── package.json              # ملف الحزمة والتبعيات
-├── nimro-mcp-config.json     # تكوين MCP
-├── README.md                 # الوثائق الرئيسية
-└── DEPLOYMENT.md             # هذا الملف
-
+│       └── plans-display.html # User interface
+├── package.json              # Package and dependencies file
+├── nimro-mcp-config.json     # MCP configuration
+├── README.md                 # Main documentation
+└── DEPLOYMENT.md             # This file
 ```
 
-## الأدوات المتاحة (Tools)
+## Available Tools
 
-### 1. عرض_باقات_الاتصالات
+### 1. `display_communication_plans`
 
-**الوصف**: عرض جميع الباقات المتاحة في واجهة تفاعلية
+**Description**: Displays all available plans in an interactive interface.
 
-**المدخلات**:
-- `نوع_الخدمة` (اختياري): "eSIM" | "أرقام افتراضية" | "الكل"
+**Inputs**:
 
-**مثال الاستخدام**:
+*   `service_type` (optional): "eSIM" | "virtual_numbers" | "all"
+
+**Example Usage**:
+
 ```
-المستخدم: "ما هي الباقات المتوفرة؟"
-ChatGPT: [يستدعي الأداة ويعرض الواجهة]
-```
-
-### 2. تفعيل_باقة
-
-**الوصف**: تفعيل باقة معينة (محاكاة)
-
-**المدخلات**:
-- `plan_id` (مطلوب): "virtual-number" | "esim-data" | "combo-plan"
-
-**مثال الاستخدام**:
-```
-المستخدم: "أريد تفعيل الباقة الشاملة"
-ChatGPT: [يستدعي تفعيل_باقة مع plan_id="combo-plan"]
+User: "What are the available plans?"
+ChatGPT: [Calls the tool and displays the interface]
 ```
 
-### 3. استعراض_تفاصيل_الباقة
+### 2. `activate_plan`
 
-**الوصف**: الحصول على تفاصيل موسعة لباقة محددة
+**Description**: Activates a specific plan (simulation).
 
-**المدخلات**:
-- `plan_id` (مطلوب): "virtual-number" | "esim-data" | "combo-plan"
+**Inputs**:
 
-## التخصيص
+*   `plan_id` (required): "virtual-number" | "esim-data" | "combo-plan"
 
-### تغيير البيانات الوهمية
+**Example Usage**:
 
-يمكنك تعديل البيانات الوهمية في `src/index.js`:
+```
+User: "I want to activate the Complete Bundle."
+ChatGPT: [Calls `activate_plan` with plan_id="combo-plan"]
+```
+
+### 3. `review_plan_details`
+
+**Description**: Gets extended details for a specific plan.
+
+**Inputs**:
+
+*   `plan_id` (required): "virtual-number" | "esim-data" | "combo-plan"
+
+## Customization
+
+### Changing Mock Data
+
+You can modify the mock data in `src/index.js`:
 
 ```javascript
 const MOCK_PLANS = {
   'your-plan-id': {
     id: 'your-plan-id',
-    name: 'اسم الباقة',
+    name: 'Plan Name',
     price: 9.99,
-    // ... المزيد من الخصائص
+    // ... more properties
   }
 };
 ```
 
-### تخصيص الواجهة
+### Customizing the Interface
 
-يمكنك تعديل التصميم في `public/ui/plans-display.html`:
-- الألوان في قسم `<style>`
-- المحتوى في قسم `<body>`
-- التفاعلات في قسم `<script>`
+You can modify the design in `public/ui/plans-display.html`:
 
-## استكشاف الأخطاء
+*   Colors in the `<style>` section.
+*   Content in the `<body>` section.
+*   Interactions in the `<script>` section.
 
-### الخطأ: "Cannot find module '@modelcontextprotocol/sdk'"
+## Troubleshooting
 
-**الحل**:
+### Error: "Cannot find module '@modelcontextprotocol/sdk'"
+
+**Solution**:
+
 ```bash
 npm install
 ```
 
-### الخطأ: "Permission denied"
+### Error: "Permission denied"
 
-**الحل** (Linux/Mac):
+**Solution** (Linux/Mac):
+
 ```bash
 chmod +x src/index.js
 ```
 
-### الواجهة لا تظهر
+### Interface does not appear
 
-**الحل**:
-1. تحقق من أن `generatePlansHTML()` يعمل بشكل صحيح
-2. تحقق من console.log في المتصفح
-3. تأكد من أن ChatGPT يدعم عرض HTML/iframe
+**Solution**:
 
-## الدعم والمساعدة
+1.  Check that `generatePlansHTML()` is working correctly.
+2.  Check the browser's console.log.
+3.  Make sure ChatGPT supports displaying HTML/iframe.
 
-- **الوثائق الرسمية**: [Model Context Protocol Docs](https://modelcontextprotocol.io/)
-- **OpenAI Developer Forum**: [https://community.openai.com/](https://community.openai.com/)
+## Support and Assistance
 
-## الترخيص
+*   **Official Documentation**: [Model Context Protocol Docs](https://modelcontextprotocol.io/)
+*   **OpenAI Developer Forum**: [https://community.openai.com/](https://community.openai.com/)
 
-MIT License - مفتوح المصدر
+## License
+
+MIT License - Open Source

@@ -1,193 +1,180 @@
-# 🌟 Nimro Communication Plans - نيمرو للاتصالات
+# 🌟 Nimro Communication Plans
 
-<div dir="rtl">
+## Overview
 
-## نظرة عامة
+**Nimro** is a prototype application specializing in communication services (virtual numbers and eSIM packages), built using the **OpenAI Apps SDK** based on the **Model Context Protocol (MCP)**.
 
-**نيمرو** هو بروتوتايب تطبيق متخصص في خدمات الاتصالات (الأرقام الافتراضية وباقات eSIM)، مبني باستخدام **OpenAI Apps SDK** القائم على **Model Context Protocol (MCP)**.
-
-يركز هذا البروتوتايب على **الشكل والتصميم الجذاب** لعرضه على أصحاب الشركات، باستخدام بيانات وهمية واقعية مستوحاة من خدمات الاتصالات العالمية.
-
-</div>
+This prototype focuses on an **attractive look and feel** to present to business owners, using realistic mock data inspired by global communication services.
 
 ---
 
-## ✨ الميزات الرئيسية
+## ✨ Key Features
 
-### 🎯 الأدوات (Tools)
+### 🎯 Tools
 
-#### 1️⃣ عرض_باقات_الاتصالات
-- عرض الباقات المتوفرة في واجهة تفاعلية جذابة
-- تصفية حسب نوع الخدمة (eSIM, أرقام افتراضية, الكل)
-- تصميم متجاوب يتناسب مع جميع الأجهزة
+#### 1️⃣ `display_communication_plans`
+- Displays available plans in an attractive interactive interface.
+- Filters by service type (eSIM, virtual numbers, all).
+- Responsive design that fits all devices.
 
-#### 2️⃣ تفعيل_باقة
-- محاكاة عملية تفعيل الباقة
-- إرجاع تأكيد فوري مع التفاصيل
+#### 2️⃣ `activate_plan`
+- Simulates the plan activation process.
+- Returns an immediate confirmation with details.
 
-#### 3️⃣ استعراض_تفاصيل_الباقة
-- عرض معلومات تفصيلية عن أي باقة
-- شروط الاستخدام وطرق الدفع
+#### 3️⃣ `review_plan_details`
+- Displays detailed information about any plan.
+- Terms of use and payment methods.
 
-### 🎨 تصميم الواجهة (UI/UX)
+### 🎨 UI/UX Design
 
-<div dir="rtl">
-
-- ✅ **تصميم عصري**: ألوان متدرجة جذابة (Gradient Design)
-- ✅ **متوافق مع مبادئ Apps SDK**: بسيط، متناسق، استخدام ألوان نظامية
-- ✅ **تفاعلي**: أزرار متحركة مع Hover Effects
-- ✅ **متجاوب**: يعمل على جميع أحجام الشاشات
-- ✅ **باللغة العربية**: RTL Support كامل
-- ✅ **علامة "الأكثر شعبية"**: تمييز واضح للباقة المميزة
-
-</div>
+- ✅ **Modern Design**: Attractive gradient colors.
+- ✅ **App SDK Compliant**: Simple, consistent, uses system colors.
+- ✅ **Interactive**: Animated buttons with hover effects.
+- ✅ **Responsive**: Works on all screen sizes.
+- ✅ **"Most Popular" Badge**: Clear highlighting for the featured plan.
 
 ---
 
-## 📦 الباقات المتوفرة (Demo Data)
+## 📦 Available Plans (Demo Data)
 
-### 1. باقة الرقم الافتراضي 📱
-- **السعر**: $3.99 / شهر
-- **الميزات**:
-  - رقم هاتف أمريكي/دولي
-  - 100 دقيقة مكالمات محلية
-  - استقبال SMS غير محدود
+### 1. Virtual Number Plan 📱
+- **Price**: $3.99 / month
+- **Features**:
+  - US/International phone number
+  - 100 local call minutes
+  - Unlimited SMS reception
 
-### 2. باقة البيانات العالمية 🌍
-- **السعر**: $19.99 / 7 أيام
-- **الميزات**:
-  - 5 جيجابايت بيانات سفر
-  - تغطية 100+ دولة
-  - تفعيل فوري (eSIM)
+### 2. Global Data Plan 🌍
+- **Price**: $19.99 / 7 days
+- **Features**:
+  - 5 GB travel data
+  - Coverage in 100+ countries
+  - Instant activation (eSIM)
 
-### 3. الباقة الشاملة ⭐ (الأكثر شعبية)
-- **السعر**: $49.99 / شهر
-- **الميزات**:
-  - رقم افتراضي + بيانات
-  - 10GB بيانات عالمية
-  - 300 دقيقة دولية
+### 3. Complete Bundle ⭐ (Most Popular)
+- **Price**: $49.99 / month
+- **Features**:
+  - Virtual number + data
+  - 10GB global data
+  - 300 international minutes
 
 ---
 
-## 🚀 التثبيت والتشغيل
+## 🚀 Installation and Running
 
-### المتطلبات
-- Node.js v18 أو أحدث
-- npm أو yarn
+### Prerequisites
+- Node.js v18 or later
+- npm or yarn
 
-### خطوات التثبيت
+### Installation Steps
 
 ```bash
-# 1. استنساخ المشروع
+# 1. Clone the project
 git clone https://github.com/elkateeb88/appChatGpt.git
 cd appChatGpt
 
-# 2. تثبيت الاعتماديات
+# 2. Install dependencies
 npm install
 
-# 3. تشغيل الخادم
+# 3. Run the server
 npm start
 ```
 
-### الاختبار المحلي
+### Local Testing
 
 ```bash
-# استخدام MCP Inspector للاختبار
+# Use MCP Inspector for testing
 npx @modelcontextprotocol/inspector src/index.js
 ```
 
-ثم افتح المتصفح على `http://localhost:5173`
+Then open your browser to `http://localhost:5173`
 
 ---
 
-## 🎭 سيناريو العرض التقديمي
+## 🎭 Presentation Scenario
 
-<div dir="rtl">
+### Scenario 1: Display Plans
 
-### السيناريو 1: عرض الباقات
+**User says in ChatGPT**:
+> "What are the available Nimro plans?"
 
-**المستخدم يقول في ChatGPT**:
-> "ما هي باقات نيمرو المتوفرة؟"
-
-**ChatGPT يستدعي**:
+**ChatGPT calls**:
 ```javascript
-عرض_باقات_الاتصالات(نوع_الخدمة='الكل')
+display_communication_plans(service_type='all')
 ```
 
-**النتيجة**:
-- عرض واجهة تفاعلية بالباقات الثلاث
-- تصميم جذاب مع ألوان متدرجة
-- أزرار واضحة للتفعيل والاستعراض
+**Result**:
+- Displays an interactive interface with the three plans.
+- Attractive design with gradient colors.
+- Clear buttons for activation and review.
 
-### السيناريو 2: تفعيل باقة
+### Scenario 2: Activate a Plan
 
-**المستخدم ينقر على**: "تفعيل الباقة" (للباقة الشاملة)
+**User clicks on**: "Activate Plan" (for the Complete Bundle)
 
-**JavaScript يرسل**:
+**JavaScript sends**:
 ```javascript
 window.openai.postMessage('action:purchase_plan', {
   plan_id: 'combo-plan',
-  user_intent: 'الرجاء تفعيل الباقة الشاملة'
+  user_intent: 'Please activate the Complete Bundle'
 })
 ```
 
-**ChatGPT يستدعي**:
+**ChatGPT calls**:
 ```javascript
-تفعيل_باقة(plan_id='combo-plan')
+activate_plan(plan_id='combo-plan')
 ```
 
-**النتيجة**:
+**Result**:
 ```
-✅ تم تفعيل "الباقة الشاملة" بنجاح!
+✅ "Complete Bundle" has been activated successfully!
 
-💰 السعر: $49.99 / شهر
-📦 الميزات:
-  • رقم افتراضي + بيانات
-  • 10GB بيانات عالمية
-  • 300 دقيقة دولية
+💰 Price: $49.99 / month
+📦 Features:
+  • Virtual number + data
+  • 10GB global data
+  • 300 international minutes
 
-📧 سيتم إرسال تفاصيل التفعيل إلى بريدك الإلكتروني.
-⏰ التفعيل الفعلي: فوري (محاكاة)
+📧 Activation details will be sent to your email.
+⏰ Actual Activation: Instant (simulation)
 ```
 
-### السيناريو 3: استعراض التفاصيل
+### Scenario 3: Review Details
 
-**المستخدم ينقر على**: "استعراض الميزات"
+**User clicks on**: "Review Features"
 
-**النتيجة**:
-- معلومات مفصلة عن الباقة
-- شروط الاستخدام
-- طرق الدفع المتاحة
-- معلومات الدعم الفني
-
-</div>
+**Result**:
+- Detailed information about the plan.
+- Terms of use.
+- Available payment methods.
+- Technical support information.
 
 ---
 
-## 🏗️ البنية التقنية
+## 🏗️ Technical Architecture
 
-### هيكل المشروع
+### Project Structure
 
 ```
 appChatGpt/
 ├── src/
-│   └── index.js                    # خادم MCP الرئيسي
+│   └── index.js                    # Main MCP server
 ├── public/
 │   └── ui/
-│       └── plans-display.html      # واجهة المستخدم التفاعلية
-├── package.json                    # التبعيات
-├── nimro-mcp-config.json           # تكوين MCP
-├── README.md                       # هذا الملف
-├── DEPLOYMENT.md                   # دليل النشر
+│       └── plans-display.html      # Interactive user interface
+├── package.json                    # Dependencies
+├── nimro-mcp-config.json           # MCP configuration
+├── README.md                       # This file
+├── DEPLOYMENT.md                   # Deployment guide
 └── .gitignore
 ```
 
-### تدفق البيانات (Data Flow)
+### Data Flow
 
 ```
 ChatGPT User Input
        ↓
-MCP Tool Call (عرض_باقات_الاتصالات)
+MCP Tool Call (display_communication_plans)
        ↓
 src/index.js (Server)
        ↓
@@ -201,7 +188,7 @@ User Clicks Button
        ↓
 window.openai.postMessage / window.parent.postMessage
        ↓
-MCP Tool Call (تفعيل_باقة / استعراض_تفاصيل_الباقة)
+MCP Tool Call (activate_plan / review_plan_details)
        ↓
 Return Confirmation Text
        ↓
@@ -210,48 +197,42 @@ ChatGPT Displays Result
 
 ---
 
-## 🎨 نقاط القوة في التصميم
+## 🎨 Design Strengths
 
-### 1. الاندماج السلس (Seamless Integration)
-<div dir="rtl">
-الواجهة لا تبدو كعنصر خارجي، بل تتناغم تماماً مع شكل ChatGPT من خلال:
-- استخدام الألوان والخطوط النظامية
-- تصميم بسيط وواضح
-- انتقالات سلسة (Smooth Transitions)
-</div>
+### 1. Seamless Integration
+The interface doesn't look like an external element but blends perfectly with the ChatGPT look and feel through:
+- Use of system colors and fonts.
+- Simple and clear design.
+- Smooth transitions.
 
-### 2. تجربة المستخدم المبسطة (Simple UX)
-<div dir="rtl">
-- كل بطاقة خدمة لديها إجراءين واضحين فقط
-- أزرار كبيرة وواضحة
-- تغذية راجعة فورية (Immediate Feedback)
-</div>
+### 2. Simplified UX
+- Each service card has only two clear actions.
+- Large and clear buttons.
+- Immediate feedback.
 
-### 3. البيانات الوهمية الواقعية
-<div dir="rtl">
-- أسعار منطقية مستوحاة من السوق
-- ميزات واقعية للباقات
-- أسماء باللغتين العربية والإنجليزية
-</div>
+### 3. Realistic Mock Data
+- Logical prices inspired by the market.
+- Realistic plan features.
+- Names in both Arabic and English.
 
 ---
 
-## 📊 Schema الأدوات
+## 📊 Tool Schema
 
-### Tool: عرض_باقات_الاتصالات
+### Tool: `display_communication_plans`
 
 ```json
 {
-  "name": "عرض_باقات_الاتصالات",
-  "description": "تستخدم لعرض الباقات المتوفرة من نيمرو، مثل الأرقام الافتراضية وباقات eSIM، في واجهة تفاعلية داخل ChatGPT.",
+  "name": "display_communication_plans",
+  "description": "Used to display available Nimro plans, such as virtual numbers and eSIM packages, in an interactive interface within ChatGPT.",
   "inputSchema": {
     "type": "object",
     "properties": {
-      "نوع_الخدمة": {
+      "service_type": {
         "type": "string",
-        "description": "نوع الخدمة المراد عرض باقاتها. يمكن أن تكون 'eSIM' أو 'أرقام افتراضية' أو 'الكل' (افتراضي).",
-        "enum": ["eSIM", "أرقام افتراضية", "الكل"],
-        "default": "الكل"
+        "description": "The type of service to display plans for. Can be 'eSIM', 'virtual_numbers', or 'all' (default).",
+        "enum": ["eSIM", "virtual_numbers", "all"],
+        "default": "all"
       }
     },
     "required": []
@@ -261,16 +242,16 @@ ChatGPT Displays Result
 
 ---
 
-## 🔧 التكامل مع ChatGPT
+## 🔧 ChatGPT Integration
 
-### الطريقة 1: MCP Inspector (للاختبار)
+### Method 1: MCP Inspector (for testing)
 ```bash
 npx @modelcontextprotocol/inspector src/index.js
 ```
 
-### الطريقة 2: ChatGPT Desktop Config
+### Method 2: ChatGPT Desktop Config
 
-أضف إلى ملف التكوين:
+Add to the configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
@@ -287,91 +268,83 @@ npx @modelcontextprotocol/inspector src/index.js
 
 ---
 
-## 🎯 نقاط البيع للعرض التقديمي
+## 🎯 Selling Points for Presentation
 
-<div dir="rtl">
+### 1. Technical Innovation
+- Use of the latest technologies (MCP, OpenAI Apps SDK).
+- Seamless integration with ChatGPT.
+- Interactive interface without needing a separate app.
 
-### 1. الابتكار التقني
-- استخدام أحدث التقنيات (MCP, OpenAI Apps SDK)
-- تكامل سلس مع ChatGPT
-- واجهة تفاعلية بدون الحاجة لتطبيق منفصل
+### 2. Premium User Experience
+- Modern and attractive design.
+- Ease of use.
+- Full support for Arabic.
 
-### 2. تجربة المستخدم المتميزة
-- تصميم عصري وجذاب
-- سهولة الاستخدام
-- دعم كامل للغة العربية
+### 3. Flexibility and Scalability
+- Easy to add new plans.
+- Can be integrated with payment systems.
+- Fully customizable.
 
-### 3. المرونة والتوسع
-- سهولة إضافة باقات جديدة
-- إمكانية التكامل مع أنظمة الدفع
-- قابل للتخصيص بالكامل
-
-### 4. التكلفة المنخفضة
-- لا حاجة لتطوير تطبيق iOS/Android منفصل
-- استضافة خفيفة
-- صيانة بسيطة
-
-</div>
+### 4. Low Cost
+- No need to develop a separate iOS/Android app.
+- Lightweight hosting.
+- Simple maintenance.
 
 ---
 
-## 📝 ملاحظات للعرض
+## 📝 Presentation Notes
 
-<div dir="rtl">
+### Before the presentation:
+1. ✅ Make sure the server is running successfully (`npm start`).
+2. ✅ Open MCP Inspector for a live demo.
+3. ✅ Prepare presentation scenarios (plans, activation, details).
+4. ✅ Check that the interface is working correctly.
 
-### قبل العرض:
-1. ✅ تأكد من تشغيل الخادم بنجاح (`npm start`)
-2. ✅ افتح MCP Inspector للتجربة المباشرة
-3. ✅ جهّز سيناريوهات العرض (الباقات، التفعيل، التفاصيل)
-4. ✅ تحقق من أن الواجهة تعمل بشكل صحيح
+### During the presentation:
+1. 🎤 Start by explaining the problem (difficulty of interactively displaying services).
+2. 💡 Explain the solution (integration with ChatGPT).
+3. 🖥️ Show the live interface.
+4. 🎯 Emphasize ease of use.
+5. 📊 Mention the business benefits.
 
-### أثناء العرض:
-1. 🎤 ابدأ بشرح المشكلة (صعوبة عرض الخدمات بطريقة تفاعلية)
-2. 💡 اشرح الحل (تكامل مع ChatGPT)
-3. 🖥️ أظهر الواجهة الحية
-4. 🎯 وضّح سهولة الاستخدام
-5. 📊 اذكر الفوائد التجارية
+### Expected Questions:
+- **Q: Can the plans be customized?**
+  - A: Yes, very easily by modifying the `src/index.js` file.
 
-### الأسئلة المتوقعة:
-- **س: هل يمكن تخصيص الباقات؟**
-  - ج: نعم، بكل سهولة عبر تعديل ملف `src/index.js`
+- **Q: How is real payment handled?**
+  - A: It can be integrated with Stripe, PayPal, or any payment gateway.
 
-- **س: كيف يتم الدفع الحقيقي؟**
-  - ج: يمكن التكامل مع Stripe, PayPal, أو أي بوابة دفع
+- **Q: Does it work on mobile?**
+  - A: Yes, the design is fully responsive.
 
-- **س: هل يعمل على الهاتف؟**
-  - ج: نعم، التصميم متجاوب بالكامل
-
-- **س: ما هي التكلفة؟**
-  - ج: تكلفة الاستضافة فقط (منخفضة جداً)
-
-</div>
+- **Q: What is the cost?**
+  - A: Only the hosting cost (very low).
 
 ---
 
-## 🤝 المساهمة والتطوير
+## 🤝 Contribution and Development
 
-للمساهمة في تطوير البروتوتايب:
+To contribute to the prototype development:
 
 ```bash
-# Fork المشروع
+# Fork the project
 git clone https://github.com/your-username/appChatGpt.git
 
-# إنشاء فرع جديد
+# Create a new branch
 git checkout -b feature/new-feature
 
-# تطبيق التغييرات
+# Apply changes
 git commit -am 'Add new feature'
 
 # Push
 git push origin feature/new-feature
 
-# إنشاء Pull Request
+# Create a Pull Request
 ```
 
 ---
 
-## 📚 المراجع والموارد
+## 📚 References and Resources
 
 - [Model Context Protocol Documentation](https://modelcontextprotocol.io/)
 - [OpenAI Platform Documentation](https://platform.openai.com/docs)
@@ -379,26 +352,26 @@ git push origin feature/new-feature
 
 ---
 
-## 📄 الترخيص
+## 📄 License
 
-MIT License - مفتوح المصدر
+MIT License - Open Source
 
 ---
 
-## 👥 الفريق
+## 👥 Team
 
 **Nimro Communications Team**
-- تطوير: فريق نيمرو التقني
-- تصميم: قسم التجربة والتصميم
-- المنتج: إدارة المنتجات
+- Development: Nimro Technical Team
+- Design: UX/UI Department
+- Product: Product Management
 
 ---
 
-## 📞 التواصل
+## 📞 Contact
 
-لأي استفسارات أو اقتراحات، يرجى التواصل عبر:
-- Email: info@nimro.com (تخيلي)
-- GitHub Issues: [إنشاء Issue](https://github.com/elkateeb88/appChatGpt/issues)
+For any inquiries or suggestions, please contact:
+- Email: info@nimro.com (imaginary)
+- GitHub Issues: [Create Issue](https://github.com/elkateeb88/appChatGpt/issues)
 
 ---
 
@@ -406,6 +379,6 @@ MIT License - مفتوح المصدر
 
 **Built with ❤️ using OpenAI Apps SDK & Model Context Protocol**
 
-🌟 إذا أعجبك المشروع، لا تنسَ إعطاءه نجمة! 🌟
+🌟 If you like the project, don't forget to give it a star! 🌟
 
 </div>

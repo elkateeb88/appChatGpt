@@ -1,446 +1,474 @@
-# 🎯 دليل العرض التقديمي - Nimro Communication Plans
+# 🎯 Presentation Guide - Nimro Communication Plans
 
-<div dir="rtl">
+## 📋 Table of Contents
 
-## 📋 جدول المحتويات
-
-1. [الإعداد قبل العرض](#الإعداد-قبل-العرض)
-2. [سيناريو العرض](#سيناريو-العرض)
-3. [النقاط الرئيسية للتركيز](#النقاط-الرئيسية-للتركيز)
-4. [الإجابة على الأسئلة](#الإجابة-على-الأسئلة)
-5. [المواد التسويقية](#المواد-التسويقية)
+1.  [Pre-Presentation Setup](#pre-presentation-setup)
+2.  [Presentation Scenario](#presentation-scenario)
+3.  [Key Points to Emphasize](#key-points-to-emphasize)
+4.  [Answering Questions](#answering-questions)
+5.  [Marketing Materials](#marketing-materials)
 
 ---
 
-## 🚀 الإعداد قبل العرض
+## 🚀 Pre-Presentation Setup
 
-### ✅ قائمة التحقق (Checklist)
+### ✅ Checklist
 
-- [ ] تثبيت الاعتماديات: `npm install`
-- [ ] اختبار الخادم: `npm start`
-- [ ] فتح MCP Inspector: `npx @modelcontextprotocol/inspector src/index.js`
-- [ ] فتح الواجهة في المتصفح: `http://localhost:5173`
-- [ ] اختبار جميع الأزرار والتفاعلات
-- [ ] تجهيز شاشة العرض (Projector/Monitor)
-- [ ] تجهيز نسخة احتياطية من العرض
+- [ ] Install dependencies: `npm install`
+- [ ] Test the server: `npm start`
+- [ ] Open MCP Inspector: `npx @modelcontextprotocol/inspector src/index.js`
+- [ ] Open the interface in the browser: `http://localhost:5173`
+- [ ] Test all buttons and interactions
+- [ ] Prepare the display screen (Projector/Monitor)
+- [ ] Prepare a backup of the presentation
 
-### 🖥️ الأدوات المطلوبة
+### 🖥️ Required Tools
 
-1. **جهاز كمبيوتر محمول**
-2. **اتصال إنترنت مستقر** (للعرض الحي)
-3. **نسخة محلية** (للعرض بدون إنترنت)
-4. **المتصفح**: Chrome أو Safari (مفضّل)
-
----
-
-## 🎬 سيناريو العرض (15-20 دقيقة)
-
-### المرحلة 1: المقدمة والمشكلة (3 دقائق)
-
-**📌 النص المقترح:**
-
-> "السلام عليكم ورحمة الله،
->
-> في عالم الاتصالات اليوم، يواجه العملاء تحديات كبيرة:
->
-> ❌ تطبيقات معقدة تحتاج تحميل وتسجيل
-> ❌ صعوبة المقارنة بين الباقات
-> ❌ عمليات شراء طويلة ومعقدة
->
-> **ماذا لو كان هناك حل أبسط؟**
->
-> تخيل أن عميلك يفتح ChatGPT، يسأل عن باقات الاتصالات، ويحصل على واجهة تفاعلية جميلة، ويشتري مباشرة... كل هذا في محادثة واحدة!
->
-> هذا ما يقدمه **نيمرو**."
-
-### المرحلة 2: العرض الحي (8 دقائق)
-
-#### الخطوة 1: عرض الباقات
-
-**📝 الإجراء:**
-1. افتح MCP Inspector
-2. في مربع الحوار، اكتب:
-   ```
-   "ما هي باقات نيمرو المتوفرة؟"
-   ```
-3. اضغط على الأداة `عرض_باقات_الاتصالات`
-4. **أشر إلى**:
-   - التصميم الجذاب
-   - الألوان المتدرجة
-   - علامة "الأكثر شعبية"
-   - وضوح الأسعار والميزات
-
-**💬 ما تقوله:**
-
-> "كما ترون، الواجهة جميلة وبسيطة وباللغة العربية بالكامل.
-> لاحظوا كيف أن الباقة الشاملة مميزة بعلامة 'الأكثر شعبية' - هذا يوجه العميل نحو الباقة الأفضل قيمة.
-> كل بطاقة تعرض السعر، الميزات، وزرين واضحين للإجراء."
-
-#### الخطوة 2: تفعيل باقة
-
-**📝 الإجراء:**
-1. انقر على زر "تفعيل الباقة" للباقة الشاملة
-2. أظهر الرسالة التأكيدية
-3. **أشر إلى**:
-   - الرد الفوري
-   - تفاصيل التأكيد
-   - تجربة سلسة
-
-**💬 ما تقوله:**
-
-> "عندما يضغط العميل على 'تفعيل الباقة'، يحصل على تأكيد فوري مع جميع التفاصيل.
-> في النسخة الحقيقية، سيتم التكامل مع بوابة الدفع وإرسال رسالة تأكيد حقيقية.
-> لكن انظروا كم هي العملية بسيطة ومباشرة!"
-
-#### الخطوة 3: استعراض التفاصيل
-
-**📝 الإجراء:**
-1. انقر على زر "استعراض الميزات"
-2. أظهر المعلومات التفصيلية
-3. **أشر إلى**:
-   - الشفافية الكاملة
-   - معلومات الدعم
-   - طرق الدفع
-
-**💬 ما تقوله:**
-
-> "إذا احتاج العميل لمزيد من المعلومات قبل الشراء، يمكنه الضغط على 'استعراض الميزات'.
-> هنا يحصل على كل التفاصيل: شروط الاستخدام، طرق الدفع، معلومات الدعم الفني.
-> كل شيء شفاف وواضح."
-
-### المرحلة 3: المزايا التقنية (4 دقائق)
-
-**📊 النقاط الرئيسية:**
-
-1. **التقنية المستخدمة:**
-   - OpenAI Apps SDK
-   - Model Context Protocol (MCP)
-   - تصميم عصري متجاوب
-
-2. **المرونة:**
-   - سهولة إضافة باقات جديدة
-   - تخصيص الألوان والتصميم
-   - متعدد اللغات (عربي/إنجليزي)
-
-3. **التكامل:**
-   - يعمل داخل ChatGPT
-   - لا حاجة لتطبيق منفصل
-   - يمكن التكامل مع أنظمتكم الحالية
-
-**💬 النص المقترح:**
-
-> "تقنياً، هذا البروتوتايب مبني على أحدث معايير OpenAI.
->
-> يمكننا:
-> - إضافة باقات جديدة في دقائق
-> - تغيير الألوان والتصميم بسهولة
-> - التكامل مع نظام الدفع والفوترة الخاص بكم
-> - إضافة لغات أخرى
->
-> كل هذا دون الحاجة لتطوير تطبيق iOS أو Android منفصل!"
-
-### المرحلة 4: الخلاصة والخطوات التالية (3 دقائق)
-
-**🎯 ملخص الفوائد:**
-
-1. **للعملاء:**
-   - ✅ سهولة الاستخدام
-   - ✅ لا حاجة لتحميل تطبيق
-   - ✅ عملية شراء سريعة
-
-2. **للشركة:**
-   - ✅ تكلفة تطوير منخفضة
-   - ✅ صيانة بسيطة
-   - ✅ وصول إلى قاعدة مستخدمي ChatGPT الضخمة
-
-3. **التقنية:**
-   - ✅ مواكبة أحدث التقنيات
-   - ✅ قابلية التوسع
-   - ✅ أمان عالي
-
-**💬 الختام:**
-
-> "في الختام، نيمرو يقدم لكم:
-> - تجربة مستخدم استثنائية
-> - تقنية حديثة ومبتكرة
-> - تكلفة منخفضة وعائد استثمار عالي
->
-> نحن جاهزون للانتقال إلى المرحلة التالية:
-> 1. تطوير MVP كامل
-> 2. التكامل مع أنظمة الدفع
-> 3. الإطلاق التجريبي
->
-> هل لديكم أي أسئلة؟"
+1.  **Laptop**
+2.  **Stable Internet Connection** (for a live demo)
+3.  **Local Copy** (for an offline demo)
+4.  **Browser**: Chrome or Safari (preferred)
 
 ---
 
-## 🔑 النقاط الرئيسية للتركيز
+## 🎬 Presentation Scenario (15-20 minutes)
 
-### 1️⃣ الابتكار
+### Phase 1: Introduction and Problem (3 minutes)
 
-**ما تقوله:**
-- "أول تطبيق اتصالات عربي يعمل داخل ChatGPT"
-- "نستخدم أحدث تقنيات الذكاء الاصطناعي"
-- "نواكب المستقبل، لا نلحق به"
+**📌 Suggested Script:**
 
-### 2️⃣ سهولة الاستخدام
+> "Good morning/afternoon,
+>
+> In today's telecommunications world, customers face significant challenges:
+>
+> ❌ Complex apps that require downloading and registration
+> ❌ Difficulty comparing plans
+> ❌ Long and complicated purchasing processes
+>
+> **What if there was a simpler solution?**
+>
+> Imagine your customer opens ChatGPT, asks about communication plans, gets a beautiful interactive interface, and buys directly... all in a single conversation!
+>
+> This is what **Nimro** offers."
 
-**ما تقوله:**
-- "3 نقرات فقط من السؤال إلى الشراء"
-- "لا تحميل، لا تسجيل، لا تعقيدات"
-- "واجهة عربية 100%"
+### Phase 2: Live Demo (8 minutes)
 
-### 3️⃣ التكلفة المنخفضة
+#### Step 1: Display Plans
 
-**ما تقوله:**
-- "لا حاجة لفريق تطوير iOS وAndroid"
-- "لا تحديثات تطبيقات معقدة"
-- "استضافة خفيفة ورخيصة"
+**📝 Action:**
 
-### 4️⃣ الوصول الواسع
+1.  Open MCP Inspector.
+2.  In the dialog box, type:
 
-**ما تقوله:**
-- "أكثر من 100 مليون مستخدم ChatGPT نشط"
-- "وصول فوري لجمهور ضخم"
-- "لا حاجة لحملات تحميل التطبيق"
+    ```
+    "What are the available Nimro plans?"
+    ```
+
+3.  Click on the `display_communication_plans` tool.
+4.  **Point to**:
+
+    *   The attractive design
+    *   The gradient colors
+    *   The "Most Popular" badge
+    *   The clarity of prices and features
+
+**💬 What to say:**
+
+> "As you can see, the interface is beautiful, simple, and fully in English.
+> Notice how the Complete Bundle is highlighted with a 'Most Popular' badge - this guides the customer towards the best value plan.
+> Each card displays the price, features, and two clear action buttons."
+
+#### Step 2: Activate a Plan
+
+**📝 Action:**
+
+1.  Click the "Activate Plan" button for the Complete Bundle.
+2.  Show the confirmation message.
+3.  **Point to**:
+
+    *   The instant response
+    *   The confirmation details
+    *   The seamless experience
+
+**💬 What to say:**
+
+> "When the customer clicks 'Activate Plan', they get an instant confirmation with all the details.
+> In a real version, this would be integrated with a payment gateway and a real confirmation message would be sent.
+> But look how simple and straightforward the process is!"
+
+#### Step 3: Review Details
+
+**📝 Action:**
+
+1.  Click the "Review Features" button.
+2.  Show the detailed information.
+3.  **Point to**:
+
+    *   Full transparency
+    *   Support information
+    *   Payment methods
+
+**💬 What to say:**
+
+> "If the customer needs more information before buying, they can click 'Review Features'.
+> Here they get all the details: terms of use, payment methods, technical support information.
+> Everything is transparent and clear."
+
+### Phase 3: Technical Advantages (4 minutes)
+
+**📊 Key Points:**
+
+1.  **Technology Used:**
+
+    *   OpenAI Apps SDK
+    *   Model Context Protocol (MCP)
+    *   Modern, responsive design
+
+2.  **Flexibility:**
+
+    *   Easy to add new plans
+    *   Customizable colors and design
+    *   Multilingual (English/Arabic)
+
+3.  **Integration:**
+
+    *   Works inside ChatGPT
+    *   No need for a separate app
+    *   Can be integrated with your existing systems
+
+**💬 Suggested Script:**
+
+> "Technically, this prototype is built on the latest OpenAI standards.
+>
+> We can:
+> - Add new plans in minutes
+> - Easily change colors and design
+> - Integrate with your payment and billing system
+> - Add other languages
+>
+> All without needing to develop a separate iOS or Android app!"
+
+### Phase 4: Conclusion and Next Steps (3 minutes)
+
+**🎯 Summary of Benefits:**
+
+1.  **For Customers:**
+
+    *   ✅ Ease of use
+    *   ✅ No need to download an app
+    *   ✅ Fast purchasing process
+
+2.  **For the Company:**
+
+    *   ✅ Low development cost
+    *   ✅ Simple maintenance
+    *   ✅ Access to the huge ChatGPT user base
+
+3.  **Technology:**
+
+    *   ✅ Keeping up with the latest technologies
+    *   ✅ Scalability
+    *   ✅ High security
+
+**💬 Conclusion:**
+
+> "In conclusion, Nimro offers you:
+> - An exceptional user experience
+> - Modern and innovative technology
+> - Low cost and high return on investment
+>
+> We are ready to move to the next stage:
+> 1. Develop a full MVP
+> 2. Integrate with payment systems
+> 3. Pilot launch
+>
+> Do you have any questions?"
 
 ---
 
-## ❓ الإجابة على الأسئلة الشائعة
+## 🔑 Key Points to Emphasize
 
-### س1: كم تكلفة التطوير الكامل؟
+### 1️⃣ Innovation
 
-**الإجابة:**
-> "التكلفة تعتمد على المتطلبات الدقيقة، لكن بشكل عام:
-> - البروتوتايب الأولي: ✅ مجاني (هذا العرض)
-> - MVP كامل: 20-30 ساعة عمل تطويرية
-> - النسخة النهائية مع التكامل: 50-80 ساعة
+**What to say:**
+
+*   "The first English-language communication app that works inside ChatGPT"
+*   "We use the latest AI technologies"
+*   "We are shaping the future, not just following it"
+
+### 2️⃣ Ease of Use
+
+**What to say:**
+
+*   "Just 3 clicks from question to purchase"
+*   "No download, no registration, no complications"
+*   "100% English interface"
+
+### 3️⃣ Low Cost
+
+**What to say:**
+
+*   "No need for an iOS and Android development team"
+*   "No complex app updates"
+*   "Light and cheap hosting"
+
+### 4️⃣ Wide Reach
+
+**What to say:**
+
+*   "Over 100 million active ChatGPT users"
+*   "Instant access to a huge audience"
+*   "No need for app download campaigns"
+
+---
+
+## ❓ Answering Common Questions
+
+### Q1: What is the cost of full development?
+
+**Answer:**
+
+> "The cost depends on the exact requirements, but in general:
+> - Initial prototype: ✅ Free (this presentation)
+> - Full MVP: 20-30 hours of development work
+> - Final version with integration: 50-80 hours
 >
-> مقارنة بتطوير تطبيق iOS + Android تقليدي (300+ ساعة)، التوفير كبير جداً."
+> Compared to traditional iOS + Android app development (300+ hours), the savings are huge."
 
-### س2: هل يمكن تخصيص التصميم؟
+### Q2: Can the design be customized?
 
-**الإجابة:**
-> "بالتأكيد! كل شيء قابل للتخصيص:
-> - الألوان والخطوط
-> - الشعار والعلامة التجارية
-> - محتوى الباقات
-> - اللغات
-> - حتى سلوك الأزرار والتفاعلات"
+**Answer:**
 
-### س3: كيف يتم الدفع الحقيقي؟
+> "Absolutely! Everything is customizable:
+> - Colors and fonts
+> - Logo and branding
+> - Plan content
+> - Languages
+> - Even the behavior of buttons and interactions"
 
-**الإجابة:**
-> "نتكامل مع أي بوابة دفع تفضلونها:
-> - Stripe (الأكثر شيوعاً)
+### Q3: How is real payment handled?
+
+**Answer:**
+
+> "We can integrate with any payment gateway you prefer:
+> - Stripe (most common)
 > - PayPal
-> - Moyasar (محلي سعودي)
-> - Tap Payments (خليجي)
-> - أو نظامكم الحالي
+> - Or your current system
 >
-> العملية آمنة ومشفرة بالكامل."
+> The process is secure and fully encrypted."
 
-### س4: ماذا عن الأمان والخصوصية؟
+### Q4: What about security and privacy?
 
-**الإجابة:**
-> "الأمان أولوية قصوى:
-> - لا نخزن معلومات بطاقات ائتمانية
-> - جميع البيانات مشفرة (SSL/TLS)
-> - متوافق مع GDPR و PCI-DSS
-> - يعمل عبر بنية OpenAI الآمنة"
+**Answer:**
 
-### س5: هل يعمل على الهاتف؟
+> "Security is a top priority:
+> - We do not store credit card information
+> - All data is encrypted (SSL/TLS)
+> - Compliant with GDPR and PCI-DSS
+> - Works through the secure OpenAI infrastructure"
 
-**الإجابة:**
-> "نعم! التصميم متجاوب 100%:
-> - يعمل على iPhone, iPad, Android
-> - يتكيف مع جميع أحجام الشاشات
-> - نفس التجربة السلسة على جميع الأجهزة
+### Q5: Does it work on mobile?
+
+**Answer:**
+
+> "Yes! The design is 100% responsive:
+> - Works on iPhone, iPad, Android
+> - Adapts to all screen sizes
+> - The same seamless experience on all devices
 >
-> يمكنني أن أريكم الآن..."
+> I can show you now..."
 >
-> [اضغط F12 في Chrome → Device Toolbar → اختر iPhone]
+> [Press F12 in Chrome → Device Toolbar → Choose iPhone]
 
-### س6: كم الوقت للإطلاق؟
+### Q6: How long to launch?
 
-**الإجابة:**
-> "الجدول الزمني المقترح:
-> - الأسبوع 1-2: تطوير MVP
-> - الأسبوع 3: التكامل مع الأنظمة
-> - الأسبوع 4: الاختبار
-> - الأسبوع 5-6: الإطلاق التجريبي
+**Answer:**
+
+> "The proposed timeline:
+> - Week 1-2: MVP development
+> - Week 3: Integration with systems
+> - Week 4: Testing
+> - Week 5-6: Pilot launch
 >
-> إجمالي: 4-6 أسابيع للإطلاق الكامل."
+> Total: 4-6 weeks for a full launch."
 
-### س7: ماذا لو تغيرت سياسات OpenAI؟
+### Q7: What if OpenAI's policies change?
 
-**الإجابة:**
-> "نقطة ممتازة! لدينا خطة بديلة:
-> - الكود مكتوب بطريقة modular
-> - يمكن تحويله لـ Web App مستقل بسهولة
-> - يمكن تشغيله كـ Widget على موقعكم
-> - لكن OpenAI ملتزمة بـ MCP كمعيار طويل الأمد"
+**Answer:**
+
+> "Excellent point! We have a backup plan:
+> - The code is written in a modular way
+> - It can be easily converted to a standalone Web App
+> - It can be run as a widget on your website
+> - But OpenAI is committed to MCP as a long-term standard"
 
 ---
 
-## 📢 المواد التسويقية
+## 📢 Marketing Materials
 
-### شرائح PowerPoint المقترحة
+### Suggested PowerPoint Slides
 
-#### Slide 1: العنوان
+#### Slide 1: Title
+
 ```
-🌟 نيمرو للاتصالات
-Nimro Communication Plans
+🌟 Nimro Communications
 
-تطبيق ذكي لبيع باقات eSIM والأرقام الافتراضية
-مبني على تقنية OpenAI Apps SDK
-```
-
-#### Slide 2: المشكلة
-```
-❌ التحديات الحالية
-
-- تطبيقات معقدة ومتعددة
-- عمليات شراء طويلة
-- صعوبة المقارنة بين الباقات
-- تكلفة تطوير عالية
+A smart app for selling eSIM and virtual number plans
+Built on OpenAI Apps SDK technology
 ```
 
-#### Slide 3: الحل
+#### Slide 2: The Problem
+
 ```
-✅ حل نيمرو
+❌ Current Challenges
 
-✨ واجهة بسيطة داخل ChatGPT
-🚀 عملية شراء في 3 نقرات
-💰 تكلفة تطوير منخفضة
-🌍 وصول لملايين المستخدمين
-```
-
-#### Slide 4: العرض الحي
-```
-💻 العرض الحي
-
-[لقطة شاشة للواجهة]
-
-"دعونا نرى كيف يعمل..."
+- Complex and multiple applications
+- Long purchasing processes
+- Difficulty comparing plans
+- High development cost
 ```
 
-#### Slide 5: المزايا التقنية
+#### Slide 3: The Solution
+
 ```
-🔧 التقنية
+✅ The Nimro Solution
+
+✨ Simple interface inside ChatGPT
+🚀 Purchase process in 3 clicks
+💰 Low development cost
+🌍 Access to millions of users
+```
+
+#### Slide 4: Live Demo
+
+```
+💻 Live Demo
+
+[Screenshot of the interface]
+
+"Let's see how it works..."
+```
+
+#### Slide 5: Technical Advantages
+
+```
+🔧 Technology
 
 - OpenAI Apps SDK
 - Model Context Protocol (MCP)
-- تصميم متجاوب (Responsive)
-- متعدد اللغات
-- آمن ومشفر
+- Responsive Design
+- Multilingual
+- Secure and encrypted
 ```
 
 #### Slide 6: ROI
+
 ```
-📊 العائد على الاستثمار
+📊 Return on Investment
 
-التطوير التقليدي:
-- iOS App: 150+ ساعة
-- Android App: 150+ ساعة
-- Backend: 100+ ساعة
-➡️ الإجمالي: 400+ ساعة
+Traditional Development:
+- iOS App: 150+ hours
+- Android App: 150+ hours
+- Backend: 100+ hours
+➡️ Total: 400+ hours
 
-تطبيق نيمرو MCP:
-- الكل في واحد: 50-80 ساعة
-➡️ توفير: 80%!
-```
-
-#### Slide 7: الخطوات التالية
-```
-🎯 الخطوات التالية
-
-1️⃣ تطوير MVP (أسبوعين)
-2️⃣ التكامل مع الأنظمة (أسبوع)
-3️⃣ الاختبار (أسبوع)
-4️⃣ الإطلاق التجريبي (أسبوع)
-
-📅 الإطلاق الكامل: 4-6 أسابيع
+Nimro MCP App:
+- All-in-one: 50-80 hours
+➡️ Savings: 80%!
 ```
 
-#### Slide 8: دعوة للعمل
-```
-🤝 لنبدأ معاً!
+#### Slide 7: Next Steps
 
-📞 تواصل معنا
+```
+🎯 Next Steps
+
+1️⃣ MVP Development (2 weeks)
+2️⃣ Integration with Systems (1 week)
+3️⃣ Testing (1 week)
+4️⃣ Pilot Launch (1 week)
+
+📅 Full Launch: 4-6 weeks
+```
+
+#### Slide 8: Call to Action
+
+```
+🤝 Let's Get Started!
+
+📞 Contact us
 📧 info@nimro.com
 🌐 www.nimro.com
 
-"شكراً لوقتكم! هل لديكم أي أسئلة؟"
+"Thank you for your time! Do you have any questions?"
 ```
 
 ---
 
-## 🎨 نصائح العرض
+## 🎨 Presentation Tips
 
-### ✅ افعل:
-- تحدث بثقة ووضوح
-- استخدم لغة الجسد الإيجابية
-- حافظ على التواصل البصري
-- استخدم أمثلة من الحياة الواقعية
-- اجعل العرض تفاعلياً
+### ✅ Do:
 
-### ❌ لا تفعل:
-- لا تقرأ من الشاشة
-- لا تستخدم مصطلحات تقنية معقدة
-- لا تتجاهل الأسئلة
-- لا تبالغ في الوعود
-- لا تنتقد المنافسين مباشرة
+*   Speak confidently and clearly
+*   Use positive body language
+*   Maintain eye contact
+*   Use real-life examples
+*   Make the presentation interactive
 
----
+### ❌ Don't:
 
-## 📱 التفاعل مع الجمهور
-
-### أسئلة للجمهور:
-
-1. "كم منكم يستخدم ChatGPT بشكل يومي؟"
-   → **الهدف**: إثبات شيوع الأداة
-
-2. "ما هي أكبر شكوى تسمعونها من عملائكم عن التطبيقات الحالية؟"
-   → **الهدف**: فهم نقاط الألم
-
-3. "تخيلوا لو كان عميلكم يمكنه الشراء بهذه السهولة... كم سترتفع المبيعات؟"
-   → **الهدف**: التفكير في العائد
+*   Don't read from the screen
+*   Don't use complex technical terms
+*   Don't ignore questions
+*   Don't over-promise
+*   Don't criticize competitors directly
 
 ---
 
-## 🏆 الختام القوي
+## 📱 Interacting with the Audience
 
-**النص الختامي المقترح:**
+### Questions for the audience:
 
-> "في عالم يتحرك بسرعة الضوء، الفائز هو من يبسط الأمور على عملائه.
->
-> نيمرو ليس مجرد تطبيق... إنه تجربة جديدة كاملة.
->
-> تجربة حيث يسأل العميل سؤالاً بسيطاً، ويحصل على حل جميل، ويشتري بضغطة زر.
->
-> هذا هو المستقبل. وأنتم تستطيعون أن تكونوا جزءاً منه.
->
-> **هل أنتم مستعدون للبدء؟**"
+1.  "How many of you use ChatGPT daily?"
+    → **Goal**: To prove the tool's popularity
+
+2.  "What is the biggest complaint you hear from your customers about current apps?"
+    → **Goal**: To understand pain points
+
+3.  "Imagine if your customer could buy this easily... how much would sales increase?"
+    → **Goal**: To think about the return
 
 ---
 
-## 📋 قائمة ما بعد العرض
+## 🏆 Strong Conclusion
 
-- [ ] جمع ملاحظات الحضور
-- [ ] الإجابة على الأسئلة الإضافية
-- [ ] جدولة اجتماع المتابعة
-- [ ] إرسال العرض التقديمي بالبريد
-- [ ] تحديد الخطوات التالية
-- [ ] إعداد الاقتراح المفصل (Proposal)
+**Suggested closing script:**
 
-</div>
+> "In a world that moves at the speed of light, the winner is the one who simplifies things for their customers.
+>
+> Nimro is not just an app... it's a whole new experience.
+>
+> An experience where the customer asks a simple question, gets a beautiful solution, and buys with the click of a button.
+>
+> This is the future. And you can be a part of it.
+>
+> **Are you ready to get started?**"
+
+---
+
+## 📋 Post-Presentation Checklist
+
+- [ ] Gather feedback from attendees
+- [ ] Answer additional questions
+- [ ] Schedule a follow-up meeting
+- [ ] Email the presentation
+- [ ] Define the next steps
+- [ ] Prepare a detailed proposal
 
 ---
 
 <div align="center">
 
-**🎯 حظاً موفقاً في العرض!**
+**🎯 Good luck with the presentation!**
 
 *Remember: Confidence + Clarity + Demonstration = Success*
 
