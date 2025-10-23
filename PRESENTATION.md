@@ -1,4 +1,4 @@
-# 🎯 Presentation Guide - Nimro Communication Plans
+# 🎯 Presentation Guide - Numeroesim Communication Plans
 
 ## 📋 Table of Contents
 
@@ -49,7 +49,7 @@
 >
 > Imagine your customer opens ChatGPT, asks about communication plans, gets a beautiful interactive interface, and buys directly... all in a single conversation!
 >
-> This is what **Nimro** offers."
+> This is what **Numeroesim** offers."
 
 ### Phase 2: Live Demo (8 minutes)
 
@@ -61,7 +61,7 @@
 2.  In the dialog box, type:
 
     ```
-    "What are the available Nimro plans?"
+    "What are the available Numeroesim plans?"
     ```
 
 3.  Click on the `display_communication_plans` tool.
@@ -172,7 +172,7 @@
 
 **💬 Conclusion:**
 
-> "In conclusion, Nimro offers you:
+> "In conclusion, Numeroesim offers you:
 > - An exceptional user experience
 > - Modern and innovative technology
 > - Low cost and high return on investment
@@ -311,7 +311,7 @@
 #### Slide 1: Title
 
 ```
-🌟 Nimro Communications
+🌟 Numeroesim Communications
 
 A smart app for selling eSIM and virtual number plans
 Built on OpenAI Apps SDK technology
@@ -331,7 +331,7 @@ Built on OpenAI Apps SDK technology
 #### Slide 3: The Solution
 
 ```
-✅ The Nimro Solution
+✅ The Numeroesim Solution
 
 ✨ Simple interface inside ChatGPT
 🚀 Purchase process in 3 clicks
@@ -372,7 +372,7 @@ Traditional Development:
 - Backend: 100+ hours
 ➡️ Total: 400+ hours
 
-Nimro MCP App:
+Numeroesim MCP App:
 - All-in-one: 50-80 hours
 ➡️ Savings: 80%!
 ```
@@ -396,8 +396,8 @@ Nimro MCP App:
 🤝 Let's Get Started!
 
 📞 Contact us
-📧 info@nimro.com
-🌐 www.nimro.com
+📧 info@numeroesim.com
+🌐 www.numeroesim.com
 
 "Thank you for your time! Do you have any questions?"
 ```
@@ -445,7 +445,7 @@ Nimro MCP App:
 
 > "In a world that moves at the speed of light, the winner is the one who simplifies things for their customers.
 >
-> Nimro is not just an app... it's a whole new experience.
+> Numeroesim is not just an app... it's a whole new experience.
 >
 > An experience where the customer asks a simple question, gets a beautiful solution, and buys with the click of a button.
 >

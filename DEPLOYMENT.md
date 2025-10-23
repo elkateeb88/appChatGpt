@@ -1,8 +1,8 @@
-# Nimro App Deployment Guide for OpenAI ChatGPT
+# Numeroesim App Deployment Guide for OpenAI ChatGPT
 
 ## Overview
 
-This guide explains how to deploy the Nimro Communication Plans application on the OpenAI ChatGPT platform using the Model Context Protocol (MCP).
+This guide explains how to deploy the Numeroesim Communication Plans application on the OpenAI ChatGPT platform using the Model Context Protocol (MCP).
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ npm run dev
     ```json
     {
       "mcpServers": {
-        "nimro": {
+        "numeroesim": {
           "command": "node",
           "args": ["/path/to/appChatGpt/src/index.js"]
         }
@@ -96,7 +96,7 @@ appChatGpt/
 │   └── ui/
 │       └── plans-display.html # User interface
 ├── package.json              # Package and dependencies file
-├── nimro-mcp-config.json     # MCP configuration
+├── numeroesim-mcp-config.json     # MCP configuration
 ├── README.md                 # Main documentation
 └── DEPLOYMENT.md             # This file
 ```

@@ -1,8 +1,8 @@
-# 🌟 Nimro Communication Plans
+# 🌟 Numeroesim Communication Plans
 
 ## Overview
 
-**Nimro** is a prototype application specializing in communication services (virtual numbers and eSIM packages), built using the **OpenAI Apps SDK** based on the **Model Context Protocol (MCP)**.
+**Numeroesim** is a prototype application specializing in communication services (virtual numbers and eSIM packages), built using the **OpenAI Apps SDK** based on the **Model Context Protocol (MCP)**.
 
 This prototype focuses on an **attractive look and feel** to present to business owners, using realistic mock data inspired by global communication services.
 
@@ -96,7 +96,7 @@ Then open your browser to `http://localhost:5173`
 ### Scenario 1: Display Plans
 
 **User says in ChatGPT**:
-> "What are the available Nimro plans?"
+> "What are the available Numeroesim plans?"
 
 **ChatGPT calls**:
 ```javascript
@@ -163,7 +163,7 @@ appChatGpt/
 │   └── ui/
 │       └── plans-display.html      # Interactive user interface
 ├── package.json                    # Dependencies
-├── nimro-mcp-config.json           # MCP configuration
+├── numeroesim-mcp-config.json           # MCP configuration
 ├── README.md                       # This file
 ├── DEPLOYMENT.md                   # Deployment guide
 └── .gitignore
@@ -224,7 +224,7 @@ The interface doesn't look like an external element but blends perfectly with th
 ```json
 {
   "name": "display_communication_plans",
-  "description": "Used to display available Nimro plans, such as virtual numbers and eSIM packages, in an interactive interface within ChatGPT.",
+  "description": "Used to display available Numeroesim plans, such as virtual numbers and eSIM packages, in an interactive interface within ChatGPT.",
   "inputSchema": {
     "type": "object",
     "properties": {
@@ -258,7 +258,7 @@ Add to the configuration file:
 ```json
 {
   "mcpServers": {
-    "nimro": {
+    "numeroesim": {
       "command": "node",
       "args": ["/absolute/path/to/appChatGpt/src/index.js"]
     }
@@ -360,8 +360,8 @@ MIT License - Open Source
 
 ## 👥 Team
 
-**Nimro Communications Team**
-- Development: Nimro Technical Team
+**Numeroesim Communications Team**
+- Development: Numeroesim Technical Team
 - Design: UX/UI Department
 - Product: Product Management
 
@@ -370,7 +370,7 @@ MIT License - Open Source
 ## 📞 Contact
 
 For any inquiries or suggestions, please contact:
-- Email: info@nimro.com (imaginary)
+- Email: info@numeroesim.com (imaginary)
 - GitHub Issues: [Create Issue](https://github.com/elkateeb88/appChatGpt/issues)
 
 ---
