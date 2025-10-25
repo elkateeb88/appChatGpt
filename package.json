@@ -1,0 +1,29 @@
+{
+  "name": "numeroesim-communication-plans",
+  "version": "2.0.0",
+  "description": "Numeroesim Communication Plans - MCP LangGraph Bridge with Interactive Widgets",
+  "main": "src/mcp-langgraph-bridge-v2.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/mcp-langgraph-bridge-v2.js",
+    "dev": "node --watch src/mcp-langgraph-bridge-v2.js"
+  },
+  "keywords": [
+    "mcp",
+    "langgraph",
+    "esim",
+    "communication",
+    "numeroesim",
+    "interactive-widgets"
+  ],
+  "author": "Numeroesim",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}
