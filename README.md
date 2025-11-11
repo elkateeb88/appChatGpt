@@ -1,421 +1,291 @@
-# 🌟 Numeroesim Communication Plans
+# 🦷 Dental Booking Agent - AI-Powered Appointment System
 
-## Overview
+AI-powered dental appointment booking system for Gaza. Built with Python FastAPI, OpenAI GPT-4o-mini, and Supabase.
 
-**Numeroesim** is a prototype application specializing in communication services (virtual numbers and eSIM packages), built using the **OpenAI Apps SDK** based on the **Model Context Protocol (MCP)**.
+## 🎯 Features
 
-This prototype focuses on an **attractive look and feel** to present to business owners, using realistic mock data inspired by global communication services.
+- **Conversational AI Agent**: Natural language booking in Arabic and English
+- **OpenAI Function Calling**: Intelligent tool usage for database operations
+- **Bilingual Support**: Palestinian Arabic dialect + English
+- **Stateful Conversations**: Persistent conversation history in Supabase
+- **Simple REST API**: Easy-to-test endpoints for integration
 
----
+## 📋 Prerequisites
 
-## ✨ Key Features
+- Python 3.9+
+- Supabase account (free tier works)
+- OpenAI API key
 
-### 🎯 Tools
+## 🚀 Quick Start
 
-#### 1️⃣ `display_communication_plans`
-- Displays available plans in an attractive interactive interface.
-- Filters by service type (eSIM, virtual numbers, all).
-- Responsive design that fits all devices.
-
-#### 2️⃣ `activate_plan`
-- Simulates the plan activation process.
-- Returns an immediate confirmation with details.
-
-#### 3️⃣ `review_plan_details`
-- Displays detailed information about any plan.
-- Terms of use and payment methods.
-
-### 🎨 UI/UX Design
-
-- ✅ **Modern Design**: Attractive gradient colors.
-- ✅ **App SDK Compliant**: Simple, consistent, uses system colors.
-- ✅ **Interactive**: Animated buttons with hover effects.
-- ✅ **Responsive**: Works on all screen sizes.
-- ✅ **"Most Popular" Badge**: Clear highlighting for the featured plan.
-
----
-
-## 📦 Available Plans (Demo Data)
-
-### 1. Virtual Number Plan 📱
-- **Price**: $3.99 / month
-- **Features**:
-  - US/International phone number
-  - 100 local call minutes
-  - Unlimited SMS reception
-
-### 2. Global Data Plan 🌍
-- **Price**: $19.99 / 7 days
-- **Features**:
-  - 5 GB travel data
-  - Coverage in 100+ countries
-  - Instant activation (eSIM)
-
-### 3. Complete Bundle ⭐ (Most Popular)
-- **Price**: $49.99 / month
-- **Features**:
-  - Virtual number + data
-  - 10GB global data
-  - 300 international minutes
-
----
-
-## 🚀 Installation and Running
-
-### Prerequisites
-- Node.js v18 or later
-- npm or yarn
-
-### Installation Steps
+### 1. Clone & Navigate
 
 ```bash
-# 1. Clone the project
 git clone https://github.com/elkateeb88/appChatGpt.git
-cd appChatGpt
-
-# 2. Install dependencies
-npm install
-
-# 3. Run the server
-npm start
+cd appChatGpt/dental-booking/backend
 ```
 
-### Local Testing with MCP Inspector
+### 2. Install Dependencies
 
 ```bash
-# Use the convenient script
-./start-inspector.sh
-
-# Or run manually
-npx @modelcontextprotocol/inspector node src/index.js
-
-# Or with the shell script
-npx @modelcontextprotocol/inspector ./run-mcp-server.sh
+pip install -r requirements.txt
 ```
 
-The inspector will:
-- Start on `http://localhost:6274`
-- Open automatically in your browser
-- Display an authentication token
-- Show all available tools for testing
+### 3. Configure Environment
 
-**For detailed testing instructions, see [TESTING.md](TESTING.md)**
+Create `.env` file:
 
----
-
-## 🎭 Presentation Scenario
-
-### Scenario 1: Display Plans
-
-**User says in ChatGPT**:
-> "What are the available Numeroesim plans?"
-
-**ChatGPT calls**:
-```javascript
-display_communication_plans(service_type='all')
+```bash
+cp .env.example .env
 ```
 
-**Result**:
-- Displays an interactive interface with the three plans.
-- Attractive design with gradient colors.
-- Clear buttons for activation and review.
+Edit `.env` with your credentials:
 
-### Scenario 2: Activate a Plan
+```env
+# Supabase Configuration
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_KEY=your-supabase-anon-key
 
-**User clicks on**: "Activate Plan" (for the Complete Bundle)
+# OpenAI Configuration
+OPENAI_API_KEY=sk-your-openai-api-key
 
-**JavaScript sends**:
-```javascript
-window.openai.postMessage('action:purchase_plan', {
-  plan_id: 'combo-plan',
-  user_intent: 'Please activate the Complete Bundle'
-})
+# Application Settings
+DEFAULT_LANGUAGE=ar
+ENVIRONMENT=development
 ```
 
-**ChatGPT calls**:
-```javascript
-activate_plan(plan_id='combo-plan')
+### 4. Setup Database
+
+1. Go to your Supabase project
+2. Navigate to SQL Editor
+3. Copy contents of `dental-booking/supabase/seed.sql`
+4. Run the SQL script
+
+This creates:
+- Database tables (doctors, services, patients, conversations, bookings)
+- 1 sample doctor
+- 5 sample dental services
+
+### 5. Run the Server
+
+```bash
+cd app
+python main.py
 ```
 
-**Result**:
-```
-✅ "Complete Bundle" has been activated successfully!
+Or using uvicorn:
 
-💰 Price: $49.99 / month
-📦 Features:
-  • Virtual number + data
-  • 10GB global data
-  • 300 international minutes
-
-📧 Activation details will be sent to your email.
-⏰ Actual Activation: Instant (simulation)
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Scenario 3: Review Details
+Server will start at: `http://localhost:8000`
 
-**User clicks on**: "Review Features"
+## 📡 API Endpoints
 
-**Result**:
-- Detailed information about the plan.
-- Terms of use.
-- Available payment methods.
-- Technical support information.
+### Health Check
 
----
+```bash
+GET /health
+```
 
-## 🏗️ Technical Architecture
+### Send Message (Main Endpoint)
 
-### Project Structure
+```bash
+POST /webhook/message
+Content-Type: application/json
+
+{
+  "phone": "972599123456",
+  "message": "السلام عليكم",
+  "language": "ar"  // optional: "ar" or "en"
+}
+```
+
+Response:
+
+```json
+{
+  "reply": "أهلاً وسهلاً! ممكن تعطيني اسمك الكامل؟",
+  "language": "ar",
+  "phone": "972599123456"
+}
+```
+
+### Helper Endpoints (for testing)
+
+```bash
+# Get all services
+GET /services
+
+# Get available slots for a date
+GET /slots/2024-01-15
+
+# Get conversation history
+GET /conversation/972599123456
+```
+
+## 🧪 Testing
+
+### Test with curl (Arabic)
+
+```bash
+# Start conversation
+curl -X POST http://localhost:8000/webhook/message \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "972599123456",
+    "message": "السلام عليكم"
+  }'
+
+# Provide name
+curl -X POST http://localhost:8000/webhook/message \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "972599123456",
+    "message": "محمد علي"
+  }'
+
+# Select service
+curl -X POST http://localhost:8000/webhook/message \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "972599123456",
+    "message": "تنظيف أسنان"
+  }'
+```
+
+### Test with curl (English)
+
+```bash
+curl -X POST http://localhost:8000/webhook/message \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "972599999888",
+    "message": "Hello, I need an appointment",
+    "language": "en"
+  }'
+```
+
+## 💬 Example Conversation Flow
+
+**Arabic (Palestinian Dialect):**
 
 ```
-appChatGpt/
-├── src/
-│   └── index.js                    # Main MCP server
-├── public/
-│   └── ui/
-│       └── plans-display.html      # Interactive user interface
-├── package.json                    # Dependencies
-├── numeroesim-mcp-config.json           # MCP configuration
-├── README.md                       # This file
-├── DEPLOYMENT.md                   # Deployment guide
+Patient: السلام عليكم
+Bot: أهلاً وسهلاً! ممكن تعطيني اسمك الكامل؟
+
+Patient: محمد علي
+Bot: أهلاً محمد! شو الخدمة اللي بتحتاجها؟
+
+1️⃣ فحص وتشخيص - 50₪ (30 دقيقة)
+2️⃣ تنظيف الأسنان - 100₪ (45 دقيقة)
+3️⃣ حشوة عادية - 150₪ (60 دقيقة)
+4️⃣ خلع سن - 120₪ (30 دقيقة)
+5️⃣ تبييض الأسنان - 300₪ (90 دقيقة)
+
+Patient: 2
+Bot: تمام! اخترت تنظيف الأسنان. أي يوم بيناسبك؟
+
+Patient: غداً
+Bot: الأوقات المتاحة ليوم 2024-01-16:
+• 10:00 صباحاً
+• 11:30 صباحاً
+• 02:00 مساءً
+• 03:30 مساءً
+شو الوقت المناسب لك؟
+
+Patient: 10:00
+Bot: تمام! تم حجز الموعد بنجاح ✅
+
+📋 ملخص الحجز:
+الاسم: محمد علي
+الخدمة: تنظيف الأسنان
+التاريخ: 2024-01-16
+الوقت: 10:00 صباحاً
+السعر: 100₪
+
+بنشوفك! 😊
+```
+
+## 🗂️ Project Structure
+
+```
+dental-booking/
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py          # FastAPI app & endpoints
+│   │   ├── agent.py         # Booking agent with OpenAI tools
+│   │   ├── database.py      # Supabase client & operations
+│   │   └── config.py        # Configuration management
+│   ├── requirements.txt
+│   ├── .env.example
+│   ├── run.sh
+│   └── test_agent.py
+├── supabase/
+│   └── seed.sql            # Database schema & sample data
+├── README.md
+├── QUICK_START.md
 └── .gitignore
 ```
 
-### Data Flow
+## 🛠️ How It Works
 
-```
-ChatGPT User Input
-       ↓
-MCP Tool Call (display_communication_plans)
-       ↓
-src/index.js (Server)
-       ↓
-Generate HTML (generatePlansHTML)
-       ↓
-Return UI Resource
-       ↓
-ChatGPT Displays UI
-       ↓
-User Clicks Button
-       ↓
-window.openai.postMessage / window.parent.postMessage
-       ↓
-MCP Tool Call (activate_plan / review_plan_details)
-       ↓
-Return Confirmation Text
-       ↓
-ChatGPT Displays Result
-```
+### Agent Architecture
 
----
+The booking agent uses OpenAI's function calling with 3 tools:
 
-## 🎨 Design Strengths
+- **get_active_services()**: Fetch available dental services
+- **get_available_slots(date)**: Check appointment availability
+- **create_booking(data)**: Save booking to database
 
-### 1. Seamless Integration
-The interface doesn't look like an external element but blends perfectly with the ChatGPT look and feel through:
-- Use of system colors and fonts.
-- Simple and clear design.
-- Smooth transitions.
+### Conversation Flow
 
-### 2. Simplified UX
-- Each service card has only two clear actions.
-- Large and clear buttons.
-- Immediate feedback.
+1. Patient sends message → FastAPI endpoint
+2. Agent retrieves conversation history from Supabase
+3. Sends context to OpenAI with function definitions
+4. OpenAI decides when to call tools
+5. Agent executes tools and updates conversation state
+6. Returns natural language response
 
-### 3. Realistic Mock Data
-- Logical prices inspired by the market.
-- Realistic plan features.
-- Names in both Arabic and English.
+### State Management
 
----
+- All conversations stored in `conversations` table
+- Message history preserved for context
+- Collected data (name, service, date, time) tracked in JSONB field
 
-## 📊 Tool Schema
+## 🎨 Sample Services
 
-### Tool: `display_communication_plans`
+| Service (AR)       | Service (EN)              | Price | Duration |
+|--------------------|---------------------------|-------|----------|
+| فحص وتشخيص         | Examination & Diagnosis   | 50₪   | 30 min   |
+| تنظيف الأسنان      | Teeth Cleaning            | 100₪  | 45 min   |
+| حشوة عادية         | Regular Filling           | 150₪  | 60 min   |
+| خلع سن             | Tooth Extraction          | 120₪  | 30 min   |
+| تبييض الأسنان      | Teeth Whitening           | 300₪  | 90 min   |
 
-```json
-{
-  "name": "display_communication_plans",
-  "description": "Used to display available Numeroesim plans, such as virtual numbers and eSIM packages, in an interactive interface within ChatGPT.",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "service_type": {
-        "type": "string",
-        "description": "The type of service to display plans for. Can be 'eSIM', 'virtual_numbers', or 'all' (default).",
-        "enum": ["eSIM", "virtual_numbers", "all"],
-        "default": "all"
-      }
-    },
-    "required": []
-  }
-}
-```
+## 🔄 Next Steps (Future Features)
+
+- [ ] WhatsApp integration with Baileys
+- [ ] Admin dashboard (Next.js)
+- [ ] SMS notifications
+- [ ] Multi-doctor support
+- [ ] Authentication & authorization
+- [ ] Booking cancellation/rescheduling
+- [ ] Calendar view
+- [ ] Reporting & analytics
+
+## 📝 License
+
+MIT
+
+## 📞 Support
+
+For detailed documentation, see:
+- [dental-booking/README.md](dental-booking/README.md) - Complete documentation
+- [dental-booking/QUICK_START.md](dental-booking/QUICK_START.md) - Quick start guide
 
 ---
 
-## 🔧 ChatGPT Integration
-
-### Method 1: MCP Inspector (for testing and debugging)
-```bash
-# Easiest way
-./start-inspector.sh
-
-# Or manually
-npx @modelcontextprotocol/inspector node src/index.js
-```
-
-This launches a web interface for testing all tools interactively.
-
-### Method 2: Claude Desktop Integration
-
-Add to the configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "numeroesim": {
-      "command": "node",
-      "args": ["/absolute/path/to/appChatGpt/src/index.js"]
-    }
-  }
-}
-```
-
-Or use the shell script:
-
-```json
-{
-  "mcpServers": {
-    "numeroesim": {
-      "command": "/absolute/path/to/appChatGpt/run-mcp-server.sh"
-    }
-  }
-}
-```
-
-After adding the configuration:
-1. Restart Claude Desktop
-2. The Numeroesim tools will be available
-3. Ask Claude to display plans or activate services
-
----
-
-## 🎯 Selling Points for Presentation
-
-### 1. Technical Innovation
-- Use of the latest technologies (MCP, OpenAI Apps SDK).
-- Seamless integration with ChatGPT.
-- Interactive interface without needing a separate app.
-
-### 2. Premium User Experience
-- Modern and attractive design.
-- Ease of use.
-- Full support for Arabic.
-
-### 3. Flexibility and Scalability
-- Easy to add new plans.
-- Can be integrated with payment systems.
-- Fully customizable.
-
-### 4. Low Cost
-- No need to develop a separate iOS/Android app.
-- Lightweight hosting.
-- Simple maintenance.
-
----
-
-## 📝 Presentation Notes
-
-### Before the presentation:
-1. ✅ Make sure the server is running successfully (`npm start`).
-2. ✅ Open MCP Inspector for a live demo.
-3. ✅ Prepare presentation scenarios (plans, activation, details).
-4. ✅ Check that the interface is working correctly.
-
-### During the presentation:
-1. 🎤 Start by explaining the problem (difficulty of interactively displaying services).
-2. 💡 Explain the solution (integration with ChatGPT).
-3. 🖥️ Show the live interface.
-4. 🎯 Emphasize ease of use.
-5. 📊 Mention the business benefits.
-
-### Expected Questions:
-- **Q: Can the plans be customized?**
-  - A: Yes, very easily by modifying the `src/index.js` file.
-
-- **Q: How is real payment handled?**
-  - A: It can be integrated with Stripe, PayPal, or any payment gateway.
-
-- **Q: Does it work on mobile?**
-  - A: Yes, the design is fully responsive.
-
-- **Q: What is the cost?**
-  - A: Only the hosting cost (very low).
-
----
-
-## 🤝 Contribution and Development
-
-To contribute to the prototype development:
-
-```bash
-# Fork the project
-git clone https://github.com/your-username/appChatGpt.git
-
-# Create a new branch
-git checkout -b feature/new-feature
-
-# Apply changes
-git commit -am 'Add new feature'
-
-# Push
-git push origin feature/new-feature
-
-# Create a Pull Request
-```
-
----
-
-## 📚 References and Resources
-
-- [Model Context Protocol Documentation](https://modelcontextprotocol.io/)
-- [OpenAI Platform Documentation](https://platform.openai.com/docs)
-- [MCP SDK on GitHub](https://github.com/modelcontextprotocol/sdk)
-
----
-
-## 📄 License
-
-MIT License - Open Source
-
----
-
-## 👥 Team
-
-**Numeroesim Communications Team**
-- Development: Numeroesim Technical Team
-- Design: UX/UI Department
-- Product: Product Management
-
----
-
-## 📞 Contact
-
-For any inquiries or suggestions, please contact:
-- Email: info@numeroesim.com (imaginary)
-- GitHub Issues: [Create Issue](https://github.com/elkateeb88/appChatGpt/issues)
-
----
-
-<div align="center">
-
-**Built with ❤️ using OpenAI Apps SDK & Model Context Protocol**
-
-🌟 If you like the project, don't forget to give it a star! 🌟
-
-</div>
+**Made with ❤️ for Gaza dental clinics**
