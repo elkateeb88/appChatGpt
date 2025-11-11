@@ -1,10 +1,22 @@
 {
   "name": "dental-booking-agent",
   "version": "1.0.0",
-  "description": "AI-powered dental appointment booking system for Gaza - FastAPI + OpenAI + Supabase",
+  "description": "AI-powered dental appointment booking system for Gaza - FastAPI + OpenAI + Supabase + Next.js Dashboard",
   "scripts": {
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:logs:whatsapp": "docker-compose logs -f whatsapp",
+    "docker:logs:backend": "docker-compose logs -f backend",
+    "docker:logs:dashboard": "docker-compose logs -f dashboard",
+    "docker:restart:whatsapp": "docker-compose restart whatsapp",
     "install-backend": "cd dental-booking/backend && pip install -r requirements.txt",
-    "start-backend": "cd dental-booking/backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "install-dashboard": "cd dental-booking/dashboard && npm install",
+    "install-whatsapp": "cd dental-booking/whatsapp-gateway && npm install",
+    "start-backend": "cd dental-booking/backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8001",
+    "start-dashboard": "cd dental-booking/dashboard && npm run dev",
+    "start-whatsapp": "cd dental-booking/whatsapp-gateway && npm run dev",
     "test-backend": "cd dental-booking/backend && python test_agent.py"
   },
   "keywords": [
@@ -13,11 +25,16 @@
     "appointment",
     "ai",
     "chatbot",
+    "whatsapp",
+    "baileys",
     "openai",
     "fastapi",
     "supabase",
+    "nextjs",
+    "shadcn-ui",
     "gaza",
-    "healthcare"
+    "healthcare",
+    "docker"
   ],
   "author": "Ahmed Elkhateb",
   "license": "MIT",
