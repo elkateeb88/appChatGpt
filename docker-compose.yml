@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Backend API Service
+  backend:
+    build:
+      context: ./dental-booking/backend
+      dockerfile: Dockerfile
+    container_name: dental-booking-backend
+    ports:
+      - "8001:8000"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEFAULT_LANGUAGE=ar
+      - ENVIRONMENT=production
+    env_file:
+      - ./dental-booking/backend/.env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - dental-network
+
+  # Dashboard Frontend Service
+  dashboard:
+    build:
+      context: ./dental-booking/dashboard
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8001
+    container_name: dental-booking-dashboard
+    ports:
+      - "3001:3000"
+    environment:
+      # Use localhost:8001 for browser (client-side) API calls
+      - NEXT_PUBLIC_API_URL=http://localhost:8001
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - dental-network
+
+  # WhatsApp Gateway Service
+  whatsapp:
+    build:
+      context: ./dental-booking/whatsapp-gateway
+      dockerfile: Dockerfile
+    container_name: dental-booking-whatsapp
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - SESSION_PATH=/app/sessions
+      - LOG_LEVEL=info
+      - ENVIRONMENT=production
+    volumes:
+      # Persist WhatsApp session data
+      - whatsapp-sessions:/app/sessions
+    depends_on:
+      - backend
+    restart: unless-stopped
+    stdin_open: true  # Keep stdin open for QR code display
+    tty: true         # Allocate a pseudo-TTY
+    networks:
+      - dental-network
+
+networks:
+  dental-network:
+    driver: bridge
+
+volumes:
+  whatsapp-sessions:
+    driver: local

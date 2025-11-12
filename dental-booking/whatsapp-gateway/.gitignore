@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+
+# Environment
+.env
+
+# Sessions (contains auth credentials)
+sessions/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
