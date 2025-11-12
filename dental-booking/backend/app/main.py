@@ -173,8 +173,35 @@ async def get_conversation(phone: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/whatsapp/status")
+async def whatsapp_status():
+    """
+    Get WhatsApp Business API status.
+
+    Returns:
+        - connected: bool - Whether WhatsApp is configured
+        - status: str - Connection status
+        - apiType: str - API type (Cloud API)
+    """
+    import httpx
+
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get("http://whatsapp:3002/status", timeout=5.0)
+            return response.json()
+    except Exception as e:
+        logger.error(f"Failed to get WhatsApp status: {str(e)}")
+        return {
+            "connected": False,
+            "status": "error",
+            "message": "Cannot connect to WhatsApp gateway"
+        }
+
+
 # ==================== Run the application ====================
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    import os
+    port = int(os.getenv("PORT", "8001"))
+    uvicorn.run(app, host="0.0.0.0", port=port)

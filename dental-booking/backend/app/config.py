@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     # Application
     default_language: str = "ar"
     environment: str = "development"
+    backend_url: Optional[str] = "http://localhost:8001"
+    session_path: Optional[str] = "./sessions"
+    phone_number_id: Optional[str] = "default"
+    log_level: Optional[str] = "info"
 
     class Config:
         env_file = ".env"

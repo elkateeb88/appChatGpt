@@ -1,115 +1,116 @@
 # WhatsApp Gateway for Dental Booking Agent
 
-WhatsApp integration using Baileys for the Dental Booking Agent system.
+WhatsApp Business Cloud API integration for the Dental Booking Agent system.
 
 ## Features
 
-- Multi-device WhatsApp Web protocol
-- QR code authentication
+- WhatsApp Business Cloud API integration
+- Webhook-based message receiving
 - Automatic message handling
-- Session persistence
-- Auto-reconnection
+- No QR code needed - uses Access Token
+- Scalable and reliable
 - Bridge to FastAPI backend
 
-## Quick Start with Docker
+## Prerequisites
 
-### 1. Build and start all services
+Before starting, you need:
 
-```bash
-npm run docker:build
-npm run docker:up
-```
+1. **WhatsApp Business Account** - Create at [Meta Business Suite](https://business.facebook.com/)
+2. **Phone Number ID** - From WhatsApp Business API settings
+3. **Access Token** - Permanent token from Meta App Dashboard
+4. **Webhook Verify Token** - Any custom string you choose
 
-### 2. View WhatsApp logs to get QR code
+## Quick Start
 
-```bash
-npm run docker:logs:whatsapp
-```
+### 1. Configure Environment Variables
 
-### 3. Scan QR code
-
-Open WhatsApp on your phone:
-1. Go to Settings > Linked Devices
-2. Tap "Link a Device"
-3. Scan the QR code shown in the terminal
-
-### 4. Wait for connection
-
-Once connected, you'll see:
-```
-✅ WhatsApp connected successfully!
-```
-
-## Manual Setup (Without Docker)
-
-### 1. Install dependencies
-
-```bash
-cd whatsapp-gateway
-npm install
-```
-
-### 2. Configure environment
+Create `.env` file:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env`:
+Edit `.env` with your credentials:
+
 ```env
-BACKEND_URL=http://localhost:8001
-SESSION_PATH=./sessions
-LOG_LEVEL=info
-ENVIRONMENT=development
+WHATSAPP_PHONE_NUMBER_ID=123456789012345
+WHATSAPP_ACCESS_TOKEN=EAAxxxxxxxxxxxxx
+WEBHOOK_VERIFY_TOKEN=my_secret_token_12345
+BACKEND_URL=http://backend:8001
+PORT=3000
 ```
 
-### 3. Run in development mode
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the Gateway
 
 ```bash
 npm run dev
 ```
 
-### 4. Scan QR code
+### 4. Configure Webhook in Meta
 
-The QR code will appear in your terminal. Scan it with WhatsApp.
+1. Go to [Meta App Dashboard](https://developers.facebook.com/)
+2. Navigate to WhatsApp > Configuration
+3. Set Webhook URL: `https://your-domain.com/webhook`
+4. Set Verify Token: Same as `WEBHOOK_VERIFY_TOKEN` in `.env`
+5. Subscribe to `messages` events
+
+### 5. Test the Integration
+
+Send a message to your WhatsApp Business number and check the logs!
 
 ## How It Works
 
 ```
-WhatsApp Message → Baileys → WhatsApp Gateway → FastAPI Backend → OpenAI → Response → WhatsApp
+WhatsApp Message → Meta Webhook → Gateway → FastAPI Backend → OpenAI → Response → WhatsApp Cloud API
 ```
 
 1. User sends message on WhatsApp
-2. Baileys receives the message
-3. Gateway forwards to FastAPI `/webhook/message`
+2. Meta sends webhook event to `/webhook`
+3. Gateway extracts message and forwards to Backend API
 4. Backend processes with AI agent
-5. Gateway sends reply back to WhatsApp
+5. Gateway sends reply via WhatsApp Cloud API
 
-## Docker Commands
+## API Endpoints
 
-```bash
-# View WhatsApp logs
-npm run docker:logs:whatsapp
+### GET /webhook
+Webhook verification endpoint for Meta.
 
-# Restart WhatsApp service
-npm run docker:restart:whatsapp
+**Query Parameters:**
+- `hub.mode` - Should be "subscribe"
+- `hub.verify_token` - Your verify token
+- `hub.challenge` - Challenge string to return
 
-# Stop all services
-npm run docker:down
+### POST /webhook
+Receives incoming WhatsApp messages from Meta.
+
+### GET /health
+Health check endpoint.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "service": "whatsapp-gateway"
+}
 ```
 
-## Session Management
+### GET /status
+Gateway status and configuration.
 
-- Sessions are stored in `/app/sessions` inside the container
-- Persisted using Docker volumes (`whatsapp-sessions`)
-- If you disconnect, just restart and it will reconnect automatically
-- To reset connection: remove the volume and scan QR again
-
-```bash
-# Remove session and start fresh
-docker-compose down
-docker volume rm appChatGpt_whatsapp-sessions
-docker-compose up -d
+**Response:**
+```json
+{
+  "status": "running",
+  "apiType": "WhatsApp Business Cloud API",
+  "phoneNumberId": "123456789012345",
+  "configured": true
+}
 ```
 
 ## Testing
@@ -127,31 +128,31 @@ Expected response:
 
 ## Troubleshooting
 
-### QR Code not showing
+### Webhook verification failed
+
+- Check that `WEBHOOK_VERIFY_TOKEN` matches in both `.env` and Meta dashboard
+- Ensure webhook URL is publicly accessible (use ngrok for local testing)
+
+### Messages not received
 
 ```bash
-# Check logs
-npm run docker:logs:whatsapp
+# Check gateway logs
+npm run dev
 
-# Restart service
-npm run docker:restart:whatsapp
+# Check webhook subscription in Meta dashboard
+# Ensure "messages" event is subscribed
+
+# Test webhook manually
+curl -X POST http://localhost:3000/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"entry":[{"changes":[{"field":"messages","value":{"messages":[{"from":"972599123456","type":"text","text":{"body":"test"}}]}}]}]}'
 ```
 
-### Connection keeps disconnecting
+### Failed to send message
 
-- Make sure backend is running
-- Check backend URL in environment variables
-- Verify network connectivity
-
-### Session expired
-
-```bash
-# Clear session and reconnect
-docker-compose down
-docker volume rm appChatGpt_whatsapp-sessions
-docker-compose up -d
-npm run docker:logs:whatsapp
-```
+- Verify `WHATSAPP_ACCESS_TOKEN` is valid and not expired
+- Check `WHATSAPP_PHONE_NUMBER_ID` is correct
+- Ensure phone number is registered with WhatsApp Business
 
 ### Backend not responding
 
@@ -159,55 +160,97 @@ npm run docker:logs:whatsapp
 # Check backend health
 curl http://localhost:8001/health
 
-# View backend logs
-npm run docker:logs:backend
+# Check backend URL in .env
+echo $BACKEND_URL
 ```
 
 ## Important Notes
 
-- Keep your phone connected to internet initially (for QR scan)
-- After QR scan, phone can be offline
-- Session persists even if container restarts
-- Multi-device protocol - works even if phone is off after initial setup
+- No phone needed after setup (Cloud API handles everything)
+- Access Token should be permanent (not temporary)
+- Webhook must be HTTPS in production (use ngrok for local testing)
 - Messages are processed automatically
-- No manual intervention needed after setup
+- 1000 free messages per month with Cloud API
+- All conversation data stored in your database
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `BACKEND_URL` | FastAPI backend URL | `http://backend:8001` |
-| `SESSION_PATH` | Path to store session | `./sessions` |
-| `LOG_LEVEL` | Logging level | `info` |
-| `ENVIRONMENT` | Environment name | `development` |
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp Business Phone Number ID | ✅ Yes | - |
+| `WHATSAPP_ACCESS_TOKEN` | Permanent Access Token from Meta | ✅ Yes | - |
+| `WEBHOOK_VERIFY_TOKEN` | Custom token for webhook verification | ✅ Yes | - |
+| `BACKEND_URL` | FastAPI backend URL | No | `http://backend:8001` |
+| `PORT` | Server port | No | `3000` |
+| `LOG_LEVEL` | Logging level | No | `info` |
+| `ENVIRONMENT` | Environment name | No | `development` |
 
 ## Supported Message Types
 
 Currently supported:
-- Text messages
-- Extended text (with links, mentions)
-- Image captions
+- ✅ Text messages
 
-Not yet supported:
-- Voice messages
-- Video messages
-- Documents
-- Stickers
+Coming soon:
+- 📋 Image messages with captions
+- 📋 Quick reply buttons
+- 📋 Template messages
+- 📋 Media messages (images, documents)
 
 ## Architecture
 
 ```
 whatsapp-gateway/
 ├── src/
-│   ├── index.ts          # Main entry point
-│   ├── whatsapp-client.ts # Baileys client wrapper
-│   ├── api-client.ts      # FastAPI bridge
-│   ├── config.ts          # Configuration
-│   └── logger.ts          # Logging setup
-├── sessions/              # WhatsApp session data
-├── Dockerfile             # Docker configuration
+│   ├── index.ts       # Main entry point + Express server
+│   ├── api-client.ts  # FastAPI backend client
+│   ├── config.ts      # Configuration
+│   └── logger.ts      # Logging setup
+├── .env.example       # Environment variables template
+├── Dockerfile         # Docker configuration
 ├── package.json
-└── tsconfig.json
+├── tsconfig.json
+└── README.md
+```
+
+## WhatsApp Cloud API Flow
+
+```
+┌─────────────┐
+│   Patient   │
+└──────┬──────┘
+       │ Sends message
+       ▼
+┌─────────────────┐
+│ WhatsApp Cloud  │
+│      API        │
+└──────┬──────────┘
+       │ Webhook POST
+       ▼
+┌─────────────────┐
+│  This Gateway   │◄──────── Configured via .env
+└──────┬──────────┘
+       │ Forward message
+       ▼
+┌─────────────────┐
+│ Backend API     │
+│  (FastAPI)      │
+└──────┬──────────┘
+       │ Process with AI
+       ▼
+┌─────────────────┐
+│   OpenAI GPT    │
+└──────┬──────────┘
+       │ Return response
+       ▼
+┌─────────────────┐
+│  This Gateway   │
+└──────┬──────────┘
+       │ Send via Cloud API
+       ▼
+┌─────────────────┐
+│   Patient's     │
+│   WhatsApp      │
+└─────────────────┘
 ```
 
 ## Development

@@ -1,0 +1,78 @@
+services:
+  # Backend API Service
+  backend:
+    build:
+      context: ./dental-booking/backend
+      dockerfile: Dockerfile
+    container_name: dental-booking-backend
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - PORT=${BACKEND_PORT}
+    volumes:
+      # Mount source code for hot reload
+      - ./dental-booking/backend:/app
+      - /app/__pycache__
+    command: uvicorn app.main:app --host 0.0.0.0 --port ${BACKEND_PORT} --reload
+    restart: unless-stopped
+    networks:
+      - dental-network
+
+  # Dashboard Frontend Service (Development with Hot Reload)
+  dashboard:
+    image: node:20-alpine
+    container_name: dental-booking-dashboard
+    working_dir: /app
+    ports:
+      - "${DASHBOARD_PORT}:${DASHBOARD_PORT}"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NODE_ENV=development
+      - PORT=${DASHBOARD_PORT}
+    volumes:
+      # Mount source code for hot reload
+      - ./dental-booking/dashboard:/app
+      - /app/node_modules
+      - /app/.next
+    command: sh -c "npm install && npm run dev -- -p ${DASHBOARD_PORT}"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - dental-network
+
+  # WhatsApp Gateway Service
+  whatsapp:
+    build:
+      context: ./dental-booking/whatsapp-gateway
+      dockerfile: Dockerfile
+    container_name: dental-booking-whatsapp
+    ports:
+      - "${WHATSAPP_PORT}:${WHATSAPP_PORT}"
+    environment:
+      - BACKEND_URL=${BACKEND_URL}
+      - WHATSAPP_PHONE_NUMBER_ID=${WHATSAPP_PHONE_NUMBER_ID}
+      - WHATSAPP_ACCESS_TOKEN=${WHATSAPP_ACCESS_TOKEN}
+      - WEBHOOK_VERIFY_TOKEN=${WEBHOOK_VERIFY_TOKEN}
+      - PORT=${WHATSAPP_PORT}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - ENVIRONMENT=${ENVIRONMENT}
+    volumes:
+      # Mount source for hot reload
+      - ./dental-booking/whatsapp-gateway/src:/app/src
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - dental-network
+
+networks:
+  dental-network:
+    driver: bridge
+
+volumes: {}
