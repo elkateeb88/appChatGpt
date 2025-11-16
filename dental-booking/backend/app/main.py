@@ -158,6 +158,17 @@ async def get_slots(date: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/conversations")
+async def get_conversations(limit: int = 50):
+    """Get all conversations."""
+    try:
+        conversations = db.get_all_conversations(limit=limit)
+        return {"conversations": conversations, "count": len(conversations)}
+    except Exception as e:
+        logger.error(f"Error fetching conversations: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/conversation/{phone}")
 async def get_conversation(phone: str):
     """Get conversation history for a patient (for testing/debugging)."""

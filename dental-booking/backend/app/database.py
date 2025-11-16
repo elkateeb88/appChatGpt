@@ -90,6 +90,15 @@ class Database:
 
     # ==================== Conversations ====================
 
+    def get_all_conversations(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Get all conversations, ordered by most recent."""
+        response = self.client.table("conversations")\
+            .select("*")\
+            .order("updated_at", desc=True)\
+            .limit(limit)\
+            .execute()
+        return response.data
+
     def get_conversation(self, patient_phone: str) -> Optional[Dict[str, Any]]:
         """Get existing conversation for a patient."""
         response = self.client.table("conversations")\
