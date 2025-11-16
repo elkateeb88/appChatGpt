@@ -24,6 +24,7 @@ export default function ConversationsPage() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedConversation, setExpandedConversation] = useState<string | null>(null);
 
   useEffect(() => {
     fetchConversations();
@@ -63,6 +64,10 @@ export default function ConversationsPage() {
     const lastMsg = messages[messages.length - 1];
     const content = lastMsg.content;
     return content.length > 100 ? content.substring(0, 100) + "..." : content;
+  };
+
+  const toggleConversation = (conversationId: string) => {
+    setExpandedConversation(expandedConversation === conversationId ? null : conversationId);
   };
 
   return (
@@ -138,7 +143,7 @@ export default function ConversationsPage() {
           ) : (
             <div className="space-y-4">
               {conversations.map((conversation) => (
-                <Card key={conversation.id} className="hover:bg-accent/50 transition-colors cursor-pointer">
+                <Card key={conversation.id} className="hover:bg-accent/50 transition-colors">
                   <CardContent className="pt-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1 space-y-2">
@@ -164,6 +169,36 @@ export default function ConversationsPage() {
                           <Clock className="h-3 w-3" />
                           <span>آخر تحديث: {formatDate(conversation.updated_at)}</span>
                         </div>
+
+                        <button
+                          onClick={() => toggleConversation(conversation.id)}
+                          className="mt-2 text-sm text-primary hover:underline"
+                        >
+                          {expandedConversation === conversation.id ? 'إخفاء المحادثة' : 'عرض المحادثة الكاملة'}
+                        </button>
+
+                        {expandedConversation === conversation.id && (
+                          <div className="mt-4 space-y-3 border-t pt-4">
+                            <h4 className="font-semibold text-sm">المحادثة الكاملة:</h4>
+                            {conversation.messages.map((message, index) => (
+                              <div
+                                key={index}
+                                className={`p-3 rounded-lg ${
+                                  message.role === 'user'
+                                    ? 'bg-primary/10 border-r-4 border-primary'
+                                    : 'bg-secondary/50 border-l-4 border-secondary'
+                                }`}
+                              >
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="text-xs font-semibold uppercase">
+                                    {message.role === 'user' ? 'المريض' : 'البوت'}
+                                  </span>
+                                </div>
+                                <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </CardContent>

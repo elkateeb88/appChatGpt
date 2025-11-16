@@ -8,6 +8,7 @@ import { api } from "@/lib/api";
 
 export default function DashboardHome() {
   const [services, setServices] = useState<any[]>([]);
+  const [conversationsCount, setConversationsCount] = useState<number>(0);
   const [healthStatus, setHealthStatus] = useState<string>("checking");
   const [retryCount, setRetryCount] = useState(0);
 
@@ -21,6 +22,11 @@ export default function DashboardHome() {
         // Get services
         const servicesData = await api.getServices();
         setServices(servicesData.services);
+
+        // Get conversations count
+        const conversationsData = await api.getConversations(100);
+        setConversationsCount(conversationsData.conversations?.length || 0);
+
         setRetryCount(0); // Reset retry count on success
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -84,7 +90,7 @@ export default function DashboardHome() {
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
+            <div className="text-2xl font-bold">{conversationsCount}</div>
             <p className="text-xs text-muted-foreground">محادثة نشطة</p>
           </CardContent>
         </Card>
