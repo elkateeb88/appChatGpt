@@ -12,7 +12,7 @@ export default function ServicesPage() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const data = await api.getServices();
+        const data: any = await api.getServices();
         setServices(data.services);
       } catch (error) {
         console.error("Error fetching services:", error);

@@ -17,6 +17,26 @@ class Database:
             settings.supabase_key
         )
 
+    # ==================== Doctors ====================
+
+    def get_doctors(self, is_active: Optional[bool] = None) -> List[Dict[str, Any]]:
+        """Get all doctors, optionally filtered by active status."""
+        query = self.client.table("doctors").select("*")
+
+        if is_active is not None:
+            query = query.eq("is_active", is_active)
+
+        response = query.execute()
+        return response.data
+
+    def get_doctor(self, doctor_id: str) -> Optional[Dict[str, Any]]:
+        """Get a specific doctor by ID."""
+        response = self.client.table("doctors")\
+            .select("*")\
+            .eq("id", doctor_id)\
+            .execute()
+        return response.data[0] if response.data else None
+
     # ==================== Services ====================
 
     def get_active_services(self) -> List[Dict[str, Any]]:
@@ -29,32 +49,140 @@ class Database:
 
     # ==================== Available Slots ====================
 
-    def get_available_slots(self, target_date: str) -> List[str]:
+    def get_available_slots(
+        self,
+        target_date: str,
+        doctor_id: Optional[str] = None,
+        service_id: Optional[str] = None
+    ) -> List[str]:
         """
-        Get available time slots for a given date.
-        Returns list of available times.
+        Get available time slots for a given date, optionally filtered by doctor.
+        Returns list of available times based on doctor availability.
 
-        Simple implementation: Return predefined slots minus booked ones.
+        Args:
+            target_date: Date in YYYY-MM-DD format
+            doctor_id: Optional doctor ID to filter by
+            service_id: Optional service ID (to get doctor from service)
         """
-        # Define default available slots (9 AM to 5 PM, 30-min intervals)
-        all_slots = [
-            "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-            "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-            "15:00", "15:30", "16:00", "16:30", "17:00"
-        ]
+        # If service_id provided, get the doctor_id from service
+        if service_id and not doctor_id:
+            service_response = self.client.table("services")\
+                .select("doctor_id")\
+                .eq("id", service_id)\
+                .execute()
+            if service_response.data:
+                doctor_id = service_response.data[0].get("doctor_id")
 
-        # Get booked slots for this date
-        response = self.client.table("bookings")\
+        # Get doctor availability for the day of week
+        all_slots = []
+        if doctor_id:
+            # Parse target_date to get day of week (0 = Monday, 6 = Sunday)
+            target_datetime = datetime.fromisoformat(target_date)
+            day_of_week = target_datetime.weekday()  # 0 = Monday
+
+            # Get doctor's availability for this day
+            availability_response = self.client.table("doctor_availability")\
+                .select("*")\
+                .eq("doctor_id", doctor_id)\
+                .eq("day_of_week", day_of_week)\
+                .eq("is_available", True)\
+                .execute()
+
+            if availability_response.data:
+                # Generate slots from doctor's availability
+                for slot in availability_response.data:
+                    start_time = slot["start_time"]  # e.g., "09:00:00"
+                    end_time = slot["end_time"]      # e.g., "17:00:00"
+
+                    # Parse times
+                    start_hour, start_min = map(int, start_time.split(":")[:2])
+                    end_hour, end_min = map(int, end_time.split(":")[:2])
+
+                    # Generate 30-minute intervals
+                    current = datetime_time(start_hour, start_min)
+                    end = datetime_time(end_hour, end_min)
+
+                    while current < end:
+                        all_slots.append(current.strftime("%H:%M"))
+                        # Add 30 minutes
+                        minutes = current.hour * 60 + current.minute + 30
+                        current = datetime_time(minutes // 60, minutes % 60)
+            else:
+                # No availability found, use default slots
+                all_slots = self._get_default_slots()
+        else:
+            # No doctor specified, use default slots
+            all_slots = self._get_default_slots()
+
+        # Get booked slots for this date (and doctor if specified)
+        booking_query = self.client.table("bookings")\
             .select("time")\
             .eq("date", target_date)\
-            .in_("status", ["pending", "confirmed"])\
-            .execute()
+            .in_("status", ["pending", "confirmed"])
+
+        if doctor_id:
+            booking_query = booking_query.eq("doctor_id", doctor_id)
+
+        response = booking_query.execute()
 
         # Remove booked slots
         booked_times = [booking["time"] for booking in response.data]
         available = [slot for slot in all_slots if slot not in booked_times]
 
         return available
+
+    def _get_default_slots(self) -> List[str]:
+        """Get default time slots (9 AM to 5 PM, 30-min intervals)."""
+        return [
+            "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+            "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+            "15:00", "15:30", "16:00", "16:30", "17:00"
+        ]
+
+    # ==================== Doctor Availability ====================
+
+    def get_doctor_availability(self, doctor_id: str) -> List[Dict[str, Any]]:
+        """Get all availability schedules for a doctor."""
+        response = self.client.table("doctor_availability")\
+            .select("*")\
+            .eq("doctor_id", doctor_id)\
+            .order("day_of_week")\
+            .order("start_time")\
+            .execute()
+        return response.data
+
+    def update_doctor_availability(
+        self,
+        doctor_id: str,
+        availability_data: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Update doctor availability schedule.
+        Deletes existing and inserts new availability.
+
+        Args:
+            doctor_id: Doctor UUID
+            availability_data: List of availability objects with day_of_week, start_time, end_time
+        """
+        # Delete existing availability for this doctor
+        self.client.table("doctor_availability")\
+            .delete()\
+            .eq("doctor_id", doctor_id)\
+            .execute()
+
+        # Insert new availability
+        if availability_data:
+            for item in availability_data:
+                item["doctor_id"] = doctor_id
+                if "is_available" not in item:
+                    item["is_available"] = True
+
+            response = self.client.table("doctor_availability")\
+                .insert(availability_data)\
+                .execute()
+            return response.data
+
+        return []
 
     # ==================== Patients ====================
 
@@ -160,6 +288,88 @@ class Database:
         return response.data[0]
 
     # ==================== Bookings ====================
+
+    def get_bookings(
+        self,
+        status: Optional[str] = None,
+        date_from: Optional[str] = None,
+        date_to: Optional[str] = None,
+        doctor_id: Optional[str] = None,
+        limit: int = 100
+    ) -> List[Dict[str, Any]]:
+        """
+        Get bookings with optional filters.
+
+        Args:
+            status: Filter by status (pending, confirmed, completed, cancelled)
+            date_from: Filter bookings from this date (YYYY-MM-DD)
+            date_to: Filter bookings until this date (YYYY-MM-DD)
+            doctor_id: Filter by doctor ID
+            limit: Maximum number of results
+        """
+        query = self.client.table("bookings")\
+            .select("*, services(name_ar, name_en, price), doctors(name, clinic_name), patients(name, phone)")
+
+        if status:
+            query = query.eq("status", status)
+
+        if date_from:
+            query = query.gte("date", date_from)
+
+        if date_to:
+            query = query.lte("date", date_to)
+
+        if doctor_id:
+            query = query.eq("doctor_id", doctor_id)
+
+        response = query.order("date", desc=False)\
+            .order("time", desc=False)\
+            .limit(limit)\
+            .execute()
+
+        return response.data
+
+    def get_booking_stats(self) -> Dict[str, int]:
+        """Get booking statistics (counts by status)."""
+        stats = {
+            "pending": 0,
+            "confirmed": 0,
+            "completed": 0,
+            "cancelled": 0,
+            "total": 0
+        }
+
+        # Get all bookings grouped by status
+        response = self.client.table("bookings")\
+            .select("status")\
+            .execute()
+
+        for booking in response.data:
+            status = booking.get("status", "pending")
+            if status in stats:
+                stats[status] += 1
+            stats["total"] += 1
+
+        return stats
+
+    def update_booking_status(
+        self,
+        booking_id: str,
+        status: str
+    ) -> Dict[str, Any]:
+        """Update booking status."""
+        if status not in ["pending", "confirmed", "completed", "cancelled"]:
+            raise ValueError(f"Invalid status: {status}")
+
+        response = self.client.table("bookings")\
+            .update({"status": status})\
+            .eq("id", booking_id)\
+            .execute()
+
+        if not response.data:
+            raise ValueError("Booking not found")
+
+        return response.data[0]
 
     def create_booking(
         self,

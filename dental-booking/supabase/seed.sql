@@ -6,6 +6,7 @@
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS conversations CASCADE;
 DROP TABLE IF EXISTS patients CASCADE;
+DROP TABLE IF EXISTS doctor_availability CASCADE;
 DROP TABLE IF EXISTS services CASCADE;
 DROP TABLE IF EXISTS doctors CASCADE;
 
@@ -36,6 +37,19 @@ CREATE TABLE services (
     duration_minutes INT,
     is_active BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Doctor Availability table
+-- Defines when doctors are available for appointments
+CREATE TABLE doctor_availability (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    doctor_id UUID REFERENCES doctors(id) ON DELETE CASCADE,
+    day_of_week INT NOT NULL CHECK (day_of_week BETWEEN 0 AND 6), -- 0=Monday, 6=Sunday
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    is_available BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT unique_doctor_day_time UNIQUE (doctor_id, day_of_week, start_time, end_time)
 );
 
 -- Patients table
@@ -80,8 +94,11 @@ CREATE TABLE bookings (
 CREATE INDEX idx_bookings_date ON bookings(date);
 CREATE INDEX idx_bookings_patient_phone ON bookings(patient_phone);
 CREATE INDEX idx_bookings_status ON bookings(status);
+CREATE INDEX idx_bookings_doctor_date ON bookings(doctor_id, date);
 CREATE INDEX idx_conversations_patient_phone ON conversations(patient_phone);
 CREATE INDEX idx_services_active ON services(is_active);
+CREATE INDEX idx_doctor_availability_doctor ON doctor_availability(doctor_id);
+CREATE INDEX idx_doctor_availability_day ON doctor_availability(day_of_week);
 
 -- ================================================
 -- SEED DATA
@@ -157,6 +174,22 @@ BEGIN
         90,
         true
     );
+
+    -- Insert doctor availability (Sunday to Thursday, 9 AM - 5 PM)
+    -- day_of_week: 0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 5=Saturday, 6=Sunday
+    INSERT INTO doctor_availability (doctor_id, day_of_week, start_time, end_time, is_available)
+    VALUES
+    -- Sunday (6)
+    (doctor_uuid, 6, '09:00:00', '17:00:00', true),
+    -- Monday (0)
+    (doctor_uuid, 0, '09:00:00', '17:00:00', true),
+    -- Tuesday (1)
+    (doctor_uuid, 1, '09:00:00', '17:00:00', true),
+    -- Wednesday (2)
+    (doctor_uuid, 2, '09:00:00', '17:00:00', true),
+    -- Thursday (3)
+    (doctor_uuid, 3, '09:00:00', '14:00:00', true);
+    -- Friday (4) and Saturday (5) are closed (no entries = not available)
 END $$;
 
 -- ================================================

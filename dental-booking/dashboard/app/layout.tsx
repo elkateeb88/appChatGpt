@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { Calendar, MessageSquare, Settings, Home, Smartphone } from "lucide-react";
+import { Calendar, MessageSquare, Settings, Home, Smartphone, UserCircle } from "lucide-react";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -51,6 +51,14 @@ export default function RootLayout({
               >
                 <MessageSquare className="h-5 w-5" />
                 <span>المحادثات</span>
+              </Link>
+
+              <Link
+                href="/doctors"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors"
+              >
+                <UserCircle className="h-5 w-5" />
+                <span>الأطباء</span>
               </Link>
 
               <Link

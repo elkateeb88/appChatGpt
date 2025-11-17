@@ -1,10 +1,10 @@
 """
 FastAPI application for the dental booking agent.
 """
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from app.agent import agent
 from app.database import db
 import logging
@@ -132,6 +132,71 @@ async def receive_message(request: MessageRequest):
         raise HTTPException(status_code=500, detail=f"Error processing message: {str(e)}")
 
 
+@app.get("/doctors")
+async def get_doctors(is_active: Optional[bool] = None):
+    """Get all doctors, optionally filtered by active status."""
+    try:
+        doctors = db.get_doctors(is_active=is_active)
+        return {"doctors": doctors, "count": len(doctors)}
+    except Exception as e:
+        logger.error(f"Error fetching doctors: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/doctors/{doctor_id}")
+async def get_doctor(doctor_id: str):
+    """Get a specific doctor by ID."""
+    try:
+        doctor = db.get_doctor(doctor_id)
+        if not doctor:
+            raise HTTPException(status_code=404, detail="Doctor not found")
+        return doctor
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching doctor: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/doctors/{doctor_id}/availability")
+async def get_doctor_availability(doctor_id: str):
+    """Get availability schedule for a doctor."""
+    try:
+        availability = db.get_doctor_availability(doctor_id)
+        return {"availability": availability, "doctor_id": doctor_id}
+    except Exception as e:
+        logger.error(f"Error fetching doctor availability: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.put("/doctors/{doctor_id}/availability")
+async def update_doctor_availability(
+    doctor_id: str,
+    availability: List[Dict[str, Any]] = Body(...)
+):
+    """
+    Update doctor availability schedule.
+
+    Request body should be a list of availability objects:
+    ```json
+    [
+        {
+            "day_of_week": 0,
+            "start_time": "09:00:00",
+            "end_time": "17:00:00",
+            "is_available": true
+        }
+    ]
+    ```
+    """
+    try:
+        updated = db.update_doctor_availability(doctor_id, availability)
+        return {"success": True, "availability": updated}
+    except Exception as e:
+        logger.error(f"Error updating doctor availability: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/services")
 async def get_services():
     """Get all active services (for testing/debugging)."""
@@ -181,6 +246,68 @@ async def get_conversation(phone: str):
         raise
     except Exception as e:
         logger.error(f"Error fetching conversation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/bookings")
+async def get_bookings(
+    status: Optional[str] = None,
+    date_from: Optional[str] = None,
+    date_to: Optional[str] = None,
+    doctor_id: Optional[str] = None,
+    limit: int = 100
+):
+    """
+    Get all bookings with optional filters.
+
+    Query parameters:
+    - status: Filter by status (pending, confirmed, completed, cancelled)
+    - date_from: Filter bookings from this date (YYYY-MM-DD)
+    - date_to: Filter bookings until this date (YYYY-MM-DD)
+    - doctor_id: Filter by doctor ID
+    - limit: Maximum number of results (default: 100)
+    """
+    try:
+        bookings = db.get_bookings(
+            status=status,
+            date_from=date_from,
+            date_to=date_to,
+            doctor_id=doctor_id,
+            limit=limit
+        )
+        return {"bookings": bookings, "count": len(bookings)}
+    except Exception as e:
+        logger.error(f"Error fetching bookings: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/bookings/stats")
+async def get_booking_stats():
+    """Get booking statistics (counts by status)."""
+    try:
+        stats = db.get_booking_stats()
+        return stats
+    except Exception as e:
+        logger.error(f"Error fetching booking stats: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.patch("/bookings/{booking_id}/status")
+async def update_booking_status(booking_id: str, status: str):
+    """
+    Update booking status.
+
+    Args:
+        booking_id: UUID of the booking
+        status: New status (pending, confirmed, completed, cancelled)
+    """
+    try:
+        booking = db.update_booking_status(booking_id, status)
+        return {"success": True, "booking": booking}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(f"Error updating booking status: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

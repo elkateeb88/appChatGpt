@@ -33,7 +33,7 @@ export default function ConversationsPage() {
   const fetchConversations = async () => {
     try {
       setLoading(true);
-      const data = await api.getConversations(50);
+      const data: any = await api.getConversations(50);
       setConversations(data.conversations || []);
       setError(null);
     } catch (err) {

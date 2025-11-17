@@ -16,15 +16,15 @@ export default function DashboardHome() {
     const fetchData = async () => {
       try {
         // Check health
-        const health = await api.healthCheck();
+        const health: any = await api.healthCheck();
         setHealthStatus(health.status);
 
         // Get services
-        const servicesData = await api.getServices();
+        const servicesData: any = await api.getServices();
         setServices(servicesData.services);
 
         // Get conversations count
-        const conversationsData = await api.getConversations(100);
+        const conversationsData: any = await api.getConversations(100);
         setConversationsCount(conversationsData.conversations?.length || 0);
 
         setRetryCount(0); // Reset retry count on success

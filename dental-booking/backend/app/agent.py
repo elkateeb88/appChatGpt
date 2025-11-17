@@ -36,16 +36,20 @@ class BookingAgent:
                 "type": "function",
                 "function": {
                     "name": "get_available_slots",
-                    "description": "Get available appointment time slots for a specific date. Returns list of available times.",
+                    "description": "Get available appointment time slots for a specific date and service. This checks doctor availability AND existing bookings to prevent conflicts. MUST be called with service_id to get accurate availability.",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "date": {
                                 "type": "string",
                                 "description": "The date to check availability for, in YYYY-MM-DD format (e.g., 2024-01-15)"
+                            },
+                            "service_id": {
+                                "type": "string",
+                                "description": "UUID of the service - REQUIRED to check doctor's availability for that service"
                             }
                         },
-                        "required": ["date"]
+                        "required": ["date", "service_id"]
                     }
                 }
             },
@@ -113,7 +117,11 @@ class BookingAgent:
 
         elif tool_name == "get_available_slots":
             date = tool_args.get("date")
-            slots = db.get_available_slots(date)
+            service_id = tool_args.get("service_id")
+            slots = db.get_available_slots(
+                target_date=date,
+                service_id=service_id
+            )
             return slots
 
         elif tool_name == "create_booking":
@@ -147,7 +155,7 @@ class BookingAgent:
 1. اسم المريض الكامل
 2. الخدمة المطلوبة (استخدم get_active_services لعرض الخدمات)
 3. التاريخ المفضل
-4. الوقت المفضل (استخدم get_available_slots للتحقق من الأوقات المتاحة)
+4. الوقت المفضل (استخدم get_available_slots مع service_id للتحقق من الأوقات المتاحة)
 5. ملاحظات (اختياري)
 
 إرشادات المحادثة:
@@ -155,6 +163,8 @@ class BookingAgent:
 - كن ودوداً ومحترماً
 - اسأل سؤال واحد في كل مرة
 - عند عرض الخدمات، اعرضها بشكل منظم مع الأسعار
+- **مهم جداً**: عند السؤال عن التاريخ، يجب أن تكون قد حصلت على اسم الخدمة أولاً
+- **مهم جداً**: استخدم get_available_slots مع service_id لأن كل دكتور له مواعيد مختلفة
 - تأكد من توفر الوقت قبل تأكيد الحجز
 - عند إتمام الحجز، استخدم create_booking واعرض ملخص الحجز
 
@@ -162,7 +172,7 @@ class BookingAgent:
 - إذا قال المستخدم "غداً" أو "بكرة"، احسب التاريخ المناسب
 - إذا قال "الأسبوع الجاي"، اقترح تواريخ محددة
 - الأسعار بالشيكل (₪)
-- أوقات العمل: 9 صباحاً - 5 مساءً
+- أوقات العمل تختلف حسب الدكتور واليوم
 
 ابدأ بالترحيب واسأل عن اسم المريض إذا كانت هذه أول رسالة."""
 
