@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-// Disabled Google Fonts due to Docker build network issues
-// import { Inter } from "next/font/google";
+import { Cairo } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Calendar, MessageSquare, Settings, Home, Smartphone, UserCircle } from "lucide-react";
 
-// const inter = Inter({ subsets: ["latin"] });
+const cairo = Cairo({
+  subsets: ["latin", "arabic"],
+  display: "swap",
+  variable: "--font-cairo"
+});
 
 export const metadata: Metadata = {
   title: "Dental Booking Dashboard - Gaza",
@@ -18,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className={cairo.variable}>
       <body>
         <div className="flex min-h-screen">
           {/* Sidebar */}

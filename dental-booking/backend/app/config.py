@@ -22,10 +22,12 @@ class Settings(BaseSettings):
     session_path: Optional[str] = "./sessions"
     phone_number_id: Optional[str] = "default"
     log_level: Optional[str] = "info"
+    port: Optional[int] = 8001
 
     class Config:
         env_file = ".env"
         case_sensitive = False
+        extra = "ignore"  # Ignore extra fields from environment
 
 
 # Global settings instance
