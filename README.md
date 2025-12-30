@@ -1,57 +1,90 @@
-# Multi-Project Repository
+# Reddit SaaS Idea Finder 🔍
 
-This repository contains multiple independent projects, each in its own branch.
+أداة ذكية لاكتشاف أفكار SaaS من مشاكل الناس الحقيقية على Reddit
 
-## Repository Structure
+## 🎯 الفكرة
 
-This main branch is intentionally kept minimal. Each project lives in its own dedicated branch:
+> المؤسسون الأذكياء لا يخترعون المشكلة... هم فقط يلتقطونها جاهزة من السوق
 
-- **numeroesim-communication-plans** - Communication plans display application (Numeroesim)
-- **claude/dental-booking-agent-mvp-...** - Dental booking system with AI agent and WhatsApp integration
-- **nimro-clean-v2** - Clean version of Nimro project
+بدلاً من سؤال الذكاء الاصطناعي عن أفكار، هذه الأداة تساعدك على:
+- البحث في Reddit عن أسئلة ومشاكل حقيقية
+- تحليل الأسئلة وتصنيفها حسب الفرصة
+- اكتشاف فرص SaaS من شكاوى الناس غير المحلولة
 
-## Working with Projects
+## ✨ المميزات
 
-### Starting a New Project
+### 1. توليد روابط بحث ذكية
+- أنماط بحث متعددة (is there any tool, looking for, frustrated with...)
+- تصفية حسب Subreddit
+- روابط مباشرة لـ Google
 
-Claude Code automatically creates a new branch for each project when you start working on it.
+### 2. تحليل الأسئلة
+- نظام تقييم ذكي (نقاط 0-100)
+- تصنيف الفرص (عالية/متوسطة/منخفضة)
+- اكتشاف الكلمات المفتاحية عالية القيمة
 
-### Switching Between Projects
+### 3. رؤى تلقائية
+- اكتشاف الإحباط = فرصة قوية
+- اكتشاف نية الشراء = عميل محتمل
+- اكتشاف سياق B2B = قيمة أعلى
 
-```bash
-# List all branches
-git branch -a
+### 4. تصدير النتائج
+- تصدير JSON للتحليل المتقدم
+- تصدير CSV للـ spreadsheets
 
-# Switch to a specific project
-git checkout <branch-name>
+## 🚀 كيفية الاستخدام
+
+1. **افتح الأداة**: `index.html`
+2. **أدخل الموضوع**: مثل AI, automation, marketing
+3. **اختر أنماط البحث**: حدد الأنماط المناسبة
+4. **انقر "توليد روابط البحث"**
+5. **تصفح النتائج في Reddit**
+6. **انسخ الأسئلة المهمة إلى الأداة**
+7. **انقر "تحليل الأسئلة"**
+8. **راجع الفرص المكتشفة**
+
+## 📊 نظام التقييم
+
+| المعيار | النقاط |
+|---------|--------|
+| "is there any tool" | +10 |
+| "frustrated with" | +10 |
+| "alternative to" | +9 |
+| استعداد للدفع (willing to pay) | +10 |
+| سياق B2B (team, company) | +7 |
+| حاجة عاجلة (urgent, asap) | +6 |
+
+## 💡 نصائح للنجاح
+
+1. **ابحث عن التكرار**: الأسئلة المتكررة = طلب حقيقي
+2. **راقب الإحباط**: كل شكوى = فرصة منتج
+3. **بلا حل واضح**: أسئلة بدون إجابات = سوق ينتظرك
+4. **الاستعداد للدفع**: ابحث عن "budget" و "willing to pay"
+
+## 🛠 التقنيات
+
+- HTML5 + CSS3
+- Vanilla JavaScript
+- تصميم متوافق مع الموبايل
+- لا يحتاج خادم (Static files)
+
+## 📁 هيكل المشروع
+
+```
+├── index.html      # الواجهة الرئيسية
+├── styles.css      # التصميم
+├── app.js          # المنطق والتحليل
+└── README.md       # التوثيق
 ```
 
-### Project Guidelines
+## 🔮 أفكار للتطوير المستقبلي
 
-Each project branch should:
-- Be self-contained with its own dependencies
-- Include its own README with project-specific documentation
-- Follow the coding standards defined in CLAUDE.md
-- Include necessary configuration files (.env.example, docker-compose, etc.)
+- [ ] ربط مباشر مع Reddit API
+- [ ] تحليل آلي بالذكاء الاصطناعي
+- [ ] حفظ الأبحاث في قاعدة بيانات
+- [ ] مقارنة الفرص عبر الوقت
+- [ ] إشعارات للأسئلة الجديدة
 
-## Development Tools
+---
 
-Projects in this repository are built using:
-- Claude Code (https://claude.ai/code)
-- Various frameworks: Python/FastAPI, Next.js, Node.js/TypeScript
-- AI/ML tools: OpenAI, LangGraph, ChromaDB
-- iOS development: Swift, Linphone
-
-## Global Configuration
-
-See [CLAUDE.md](./CLAUDE.md) for:
-- Development guidelines
-- Common commands
-- Project structure patterns
-- Best practices
-
-## Notes
-
-- Main branch contains only this README and global configuration
-- Each project maintains its own version history in its branch
-- No cross-project dependencies should exist
+💡 **تذكر**: أفضل أفكار الشركات لا تولد من الإلهام، بل من شكاوى الناس غير المحلولة!

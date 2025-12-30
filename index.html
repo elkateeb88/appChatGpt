@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit SaaS Idea Finder | اكتشف أفكار SaaS من Reddit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🔍</span>
+                <h1>Reddit SaaS Finder</h1>
+            </div>
+            <p class="tagline">اكتشف أفكار SaaS من مشاكل الناس الحقيقية على Reddit</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-card">
+                <h2>🎯 ابحث عن فرص SaaS</h2>
+
+                <div class="input-group">
+                    <label for="topic">الموضوع / المجال</label>
+                    <input type="text" id="topic" placeholder="مثال: AI, automation, productivity, finance...">
+                    <div class="suggestions">
+                        <span class="tag" onclick="setTopic('AI')">AI</span>
+                        <span class="tag" onclick="setTopic('automation')">Automation</span>
+                        <span class="tag" onclick="setTopic('productivity')">Productivity</span>
+                        <span class="tag" onclick="setTopic('marketing')">Marketing</span>
+                        <span class="tag" onclick="setTopic('finance')">Finance</span>
+                        <span class="tag" onclick="setTopic('developer tools')">Dev Tools</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>أنماط الأسئلة (اختر واحد أو أكثر)</label>
+                    <div class="patterns-grid">
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="is there any tool" checked>
+                            <span>"is there any tool"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="looking for" checked>
+                            <span>"looking for"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="need help with">
+                            <span>"need help with"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="anyone know">
+                            <span>"anyone know"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="recommend">
+                            <span>"recommend"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="alternative to">
+                            <span>"alternative to"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="how do I">
+                            <span>"how do I"</span>
+                        </label>
+                        <label class="pattern-checkbox">
+                            <input type="checkbox" value="frustrated with">
+                            <span>"frustrated with"</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Subreddits المستهدفة (اختياري)</label>
+                    <div class="subreddits-input">
+                        <input type="text" id="subreddits" placeholder="مثال: r/SaaS, r/startups, r/Entrepreneur...">
+                    </div>
+                    <div class="suggestions">
+                        <span class="tag" onclick="addSubreddit('r/SaaS')">r/SaaS</span>
+                        <span class="tag" onclick="addSubreddit('r/startups')">r/startups</span>
+                        <span class="tag" onclick="addSubreddit('r/Entrepreneur')">r/Entrepreneur</span>
+                        <span class="tag" onclick="addSubreddit('r/smallbusiness')">r/smallbusiness</span>
+                        <span class="tag" onclick="addSubreddit('r/webdev')">r/webdev</span>
+                    </div>
+                </div>
+
+                <button class="search-btn" onclick="generateSearches()">
+                    <span class="btn-icon">🚀</span>
+                    توليد روابط البحث
+                </button>
+            </div>
+        </section>
+
+        <!-- Generated Searches -->
+        <section class="results-section" id="results-section" style="display: none;">
+            <h2>🔗 روابط البحث المولدة</h2>
+            <p class="section-desc">انقر على أي رابط لفتح البحث في Google، ثم عد هنا لتسجيل النتائج</p>
+
+            <div class="search-links" id="search-links"></div>
+
+            <div class="divider"></div>
+
+            <h2>📝 سجل الأسئلة المكتشفة</h2>
+            <div class="question-input-area">
+                <textarea id="question-input" placeholder="الصق هنا الأسئلة التي وجدتها في Reddit (سؤال في كل سطر)..."></textarea>
+                <button class="analyze-btn" onclick="analyzeQuestions()">
+                    <span>🧠</span> تحليل الأسئلة
+                </button>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section class="analysis-section" id="analysis-section" style="display: none;">
+            <h2>💎 تحليل الفرص</h2>
+
+            <div class="stats-grid" id="stats-grid"></div>
+
+            <div class="opportunities-list" id="opportunities-list"></div>
+
+            <div class="export-section">
+                <button class="export-btn" onclick="exportResults()">
+                    <span>📥</span> تصدير النتائج (JSON)
+                </button>
+                <button class="export-btn" onclick="exportAsCSV()">
+                    <span>📊</span> تصدير (CSV)
+                </button>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="tips-section">
+            <h2>💡 نصائح للعثور على أفضل الفرص</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <span class="tip-icon">🔄</span>
+                    <h3>ابحث عن التكرار</h3>
+                    <p>الأسئلة التي تتكرر بنفس الصيغة = طلب حقيقي في السوق</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">😤</span>
+                    <h3>راقب الإحباط</h3>
+                    <p>كل تعليق محبط من الحلول الحالية = فرصة لمنتج أفضل</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">❌</span>
+                    <h3>بلا حل واضح</h3>
+                    <p>الأسئلة بدون إجابات مقنعة = سوق جاهز ينتظرك</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">💰</span>
+                    <h3>الاستعداد للدفع</h3>
+                    <p>ابحث عن عبارات مثل "willing to pay" أو "budget for"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>💡 الفكرة: المؤسسون الأذكياء لا يخترعون المشكلة... هم فقط يلتقطونها جاهزة من السوق</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
