@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Backend storage (keep directories, ignore files)
+backend/storage/templates/*
+backend/storage/outputs/*
+backend/storage/thumbnails/*
+!backend/storage/templates/.gitkeep
+!backend/storage/outputs/.gitkeep
+!backend/storage/thumbnails/.gitkeep
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Misc
+*.log
+.DS_Store
+Thumbs.db
